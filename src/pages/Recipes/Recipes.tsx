@@ -3,8 +3,8 @@ import { FaPlus } from "react-icons/fa";
 import { IoIosHome } from "react-icons/io";
 import { FaFilter } from "react-icons/fa6";
 import { useState } from "react";
-import AddRecipe from "../components/AddRecipe";
-import Modal from "../components/Modal";
+import AddRecipe from "../../components/AddRecipe";
+import Modal from "../../components/Modal";
 import { FaSearch } from "react-icons/fa";
 function Recipes() {
   const [toggleRecipe, setToggleRecipe] = useState(false);

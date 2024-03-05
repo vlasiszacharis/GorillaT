@@ -1,22 +1,9 @@
 import React from "react";
-import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 import { IoClose } from "react-icons/io5";
-import { BASE_URL } from "../config/BaseUrl";
 import { FormEvent, MouseEvent } from "react";
-const editStockItem = async (editStockItem: any) => {
-  const { data } = await axios.put(
-    `${BASE_URL}/api/v1/stock/items/`,
-    editStockItem
-  );
-  return data;
-};
-
-interface EditStockProps {
-  setToggleEdit: (value: boolean) => void;
-  supplierName: string;
-  supplierCode: string;
-}
+import { putStockItem } from "../utils/api/apiClient";
+import { EditStockProps } from "../types/apiClientTypes";
 
 function EditStockItem({
   setToggleEdit,
@@ -24,9 +11,9 @@ function EditStockItem({
   supplierCode,
 }: EditStockProps) {
   const queryClient = useQueryClient();
-  const mutation = useMutation(editStockItem, {
+  const mutation = useMutation(putStockItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries("fetchStockItem");
+      queryClient.invalidateQueries("StockItem");
     },
     onError: (error) => {
       console.error("Error editing supplier:", error);
@@ -58,7 +45,7 @@ function EditStockItem({
       item_quantity: parseInt(item_quantity, 10),
     };
 
-    mutation.mutate(editStockItem);
+    // mutation.mutate(editStockItem);
   };
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setToggleEdit(false);

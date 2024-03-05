@@ -2,7 +2,7 @@ import React from "react";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
-import { BASE_URL } from "../config/BaseUrl";
+import { BASE_URL } from "../utils/config/BaseUrl";
 import { FormEvent } from "react";
 interface AddSupplierProps {
   setToggleSupplier: (value: boolean) => void;

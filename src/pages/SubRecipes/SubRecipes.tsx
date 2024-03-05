@@ -4,22 +4,13 @@ import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import { useQuery } from "react-query";
-import axios from "axios";
-import { BASE_URL } from "../config/BaseUrl";
-
 import Accordion from "@mui/material/Accordion";
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
-import LoadingSpinner from "../components/LoadingSpinner";
-
-const fetchSubRecipesPriced = async () => {
-  const response = await axios.get(
-    `${BASE_URL}/api/v1/recipes/subrecipes/priced`
-  );
-  return response.data;
-};
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { getSubRecipes } from "../../utils/api/apiClient";
 
 function SubRecipes() {
   const [toggleSubRecipe, setToggleSubRecipe] = useState(false);
@@ -27,7 +18,7 @@ function SubRecipes() {
     setToggleSubRecipe(!toggleSubRecipe);
   };
 
-  const { data, isLoading } = useQuery("fetchSubRecipe", fetchSubRecipesPriced);
+  const { data, isLoading } = useQuery("SubRecipe", getSubRecipes);
   const [selectedSubRecipe, setSelectedSubRecipe] = useState(null);
 
   if (isLoading)
@@ -108,7 +99,7 @@ function SubRecipes() {
         <span className="flex justify-center items-center">Quantity</span>
         <span className="flex justify-center items-center">Food Cost</span>
       </div>
-      {data.map((subRecipeItem: any, index: number) => (
+      {data?.map((subRecipeItem: any, index: number) => (
         <Accordion
           key={index}
           expanded={selectedSubRecipe === index}

@@ -1,36 +1,22 @@
 import React, { ChangeEvent, FormEvent } from "react";
 import { IoClose } from "react-icons/io5";
-import axios from "axios";
-import { BASE_URL } from "../config/BaseUrl";
 import { useMutation, useQueryClient, useQuery } from "react-query";
 import { useState } from "react";
+import { getSuppliers } from "../utils/api/apiClient";
+import { postStockItems } from "../utils/api/apiClient";
+import { AddStockItemProps } from "../types/apiClientTypes";
 
-const fetchSuppliers = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/suppliers`);
-  return response.data;
-};
-const postStockItem = async (addStockItem: any) => {
-  const response = await axios.post(
-    `${BASE_URL}/api/v1/stock/items`,
-    addStockItem
-  );
-  return response.data;
-};
-
-interface AddStockItemProps {
-  setToggleItem: (value: boolean) => void;
-}
 function AddStockItem({ setToggleItem }: AddStockItemProps) {
   const queryClient = useQueryClient();
-  const mutation = useMutation(postStockItem, {
+  const mutation = useMutation(postStockItems, {
     onSuccess: () => {
-      queryClient.invalidateQueries("fetchStockItem");
+      queryClient.invalidateQueries("StockItem");
     },
     onError: (error) => {
       console.error("Error creating supplier:", error);
     },
   });
-  const { data, isLoading } = useQuery("dataKey", fetchSuppliers);
+  const { data, isLoading } = useQuery("Suppliers", getSuppliers);
   const [selectedSupplier, setSupplier] = useState("Global");
   if (isLoading) return <div>Loading...</div>;
 
@@ -79,7 +65,7 @@ function AddStockItem({ setToggleItem }: AddStockItemProps) {
         <div className="flex flex-row gap-4 p-4 pr-8 items-start justify-center">
           <span className="font-bold">Supplier Name</span>
           <select value={selectedSupplier} onChange={handleSupplier}>
-            {data.map((supplier: any, index: number) => (
+            {data?.map((supplier: any, index: number) => (
               <option key={index}>{supplier.supplier_name}</option>
             ))}
           </select>

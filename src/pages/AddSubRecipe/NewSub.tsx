@@ -1,37 +1,29 @@
 import React from "react";
-import axios from "axios";
-import { BASE_URL } from "../config/BaseUrl";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { ChangeEvent } from "react";
-import useCalculatePricePerUnit from "../hooks/useCalculatePricePerUnit";
-// Posts subrecipe data to the server.
-const postSubRecipe = async (event: any) => {
-  const response = await axios.post(
-    `${BASE_URL}/api/v1/recipes/subrecipes/priced`,
-    event
-  );
-  return response.data;
-};
-// Fetches priced subrecipe from the server.
-const getSubRecipes = async () => {
-  const response = await axios.get(
-    `${BASE_URL}/api/v1/recipes/subrecipes/priced`
-  );
-  return response.data;
-};
-
-// Fetches items from the server.
-const getItems = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/items`);
-  return response.data;
-};
+import useCalculatePricePerUnit from "../../hooks/useCalculatePricePerUnit";
+import useSubRecipeCalculate from "../../hooks/useSubRecipeCalculate";
+import {
+  getItems,
+  postSubRecipe,
+  getSubRecipes,
+} from "../../utils/api/apiClient";
+import {
+  Ingredient,
+  IngredientID,
+  IngredientPost,
+  PricedSubRecipeModelID,
+  PricedSubRecipeModel,
+  PricedSubRecipePost,
+} from "../../types/apiClientTypes";
 
 function NewSub() {
   const queryClient = useQueryClient();
   //States
+
   const [searchTerm, setSearchTerm] = useState("");
   const [ingredientsMenu, setIngredientsMenu] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState<
@@ -41,80 +33,21 @@ function NewSub() {
   const [searchSub, setSearchSub] = useState("");
   const [selectedSub, setSelectedSub] = useState<PricedSubRecipeModelID[]>([]);
 
-  //interfaces
-
-  interface Ingredient {
-    item_supplier_name: string;
-    item_supplier_code: string;
-    item_name: string;
-    item_description: string;
-    item_measurement_unit: string;
-    item_category: string;
-    item_quantity: number;
-    item_price: number;
-    item_pricePerUnit: number;
-  }
-  interface IngredientID extends Ingredient {
-    id: string;
-  }
-  interface IngredientPost {
-    type: string;
-    title: string;
-    supplier_code: string;
-    measurement_unit: string;
-    quantity: number;
-  }
-
-  interface SimpleIngredientModel {
-    quantity: number;
-    food_cost: number;
-    title: string;
-    supplier_code: string;
-    measurement_unit: string;
-    type: "ingredient";
-  }
-
-  interface SubRecipeModel {
-    quantity: number;
-    food_cost: number;
-    sub_recipe_id: string;
-    type: "sub-recipe";
-  }
-
-  type PricedIngredientModel = SimpleIngredientModel | SubRecipeModel;
-
-  interface PricedSubRecipeModel {
-    priced_sub_recipe_id: number;
-    priced_sub_recipe_title: string;
-    priced_sub_recipe_description: string;
-    priced_sub_recipe_ingredients: PricedIngredientModel[];
-    priced_sub_recipe_quantity: number;
-    priced_sub_recipe_food_cost: number;
-  }
-  interface PricedSubRecipeModelID extends PricedSubRecipeModel {
-    id: string;
-  }
-  interface PricedSubRecipePost {
-    quantity: number;
-    type: string;
-    sub_recipe_id: number;
-  }
-  //useQuery & useMutation
   const { data: subs, isLoading: subLoading } = useQuery(
-    "getSubRecipes",
+    "SubRecipes",
     getSubRecipes
   );
   const { data: items, isLoading: itemLoading } = useQuery<Ingredient[]>(
-    "fetchItems",
+    "Items",
     getItems
   );
 
-  console.log(items?.[1]);
   const ingredientsCalculate = useCalculatePricePerUnit(items);
-  console.log(ingredientsCalculate);
+  const subRecipeCalculate = useSubRecipeCalculate(subs);
+  console.log(subRecipeCalculate);
   const mutation = useMutation(postSubRecipe, {
     onSuccess: () => {
-      queryClient.invalidateQueries("fetchSubRecipe");
+      queryClient.invalidateQueries("SubRecipes");
     },
     onError: (error) => {
       console.error("Error creating subrecipe:", error);
@@ -141,8 +74,10 @@ function NewSub() {
   const handleSub = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchSub(event.target.value);
   };
-  const handleIngredientFocus = (event: React.FocusEvent<HTMLInputElement>) => {
-    setIngredientsMenu(true);
+  const handleIngredientFocus = () => {
+    if (!ingredientsMenu) {
+      setIngredientsMenu(true);
+    }
   };
 
   const handleItemClick = (item: Ingredient) => {
@@ -212,7 +147,7 @@ function NewSub() {
     ) || [];
 
   const visibleSubRecipes =
-    subs?.filter((subrecipe: PricedSubRecipeModel) =>
+    subRecipeCalculate?.filter((subrecipe: PricedSubRecipeModel) =>
       subrecipe.priced_sub_recipe_title
         .toLowerCase()
         .includes(searchSub.toLowerCase())
@@ -260,16 +195,19 @@ function NewSub() {
 
   return (
     <>
-      <div
-        id="inventory_titles"
-        className="flex flex-row justify-start pt-4 gap-2 items-center bg-slate-100 font-semibold p-2 font-manrope text-lg mr-1  rounded-xl pl-10"
-      ></div>
       <form onSubmit={handleForm}>
-        <h2 className="font-manrope pl-8  font-semibold justify-start items-center">
-          Create New Sub-Recipe
-        </h2>
+        <div
+          id="inventory_titles"
+          className="flex flex-row justify-start pt-4 gap-2 items-center border-2 border-slate-100 bg-slate-50 font-semibold p-2 font-manrope text-lg mr-1    pl-10"
+        >
+          {" "}
+          <h2 className="font-manrope pl-8  font-semibold justify-start items-center">
+            Create New Sub-Recipe
+          </h2>
+        </div>
+
         {/* Name */}
-        <div className="bg-slate-100 p-4 gap-2 rounded-lg mt-2 shadow-sm">
+        <div className="bg-slate-100 p-4 gap-3 rounded-lg mt-2 border-2 border-slate-100 shadow-sm">
           <h3 className="text-lg font-semibold mb-4 text-gray-800">
             Add New Recipe
           </h3>
@@ -324,7 +262,7 @@ function NewSub() {
           </button>
         </div>
         {/* Ingredients */}
-        <div className="flex flex-col justify-start pt-4 items-start mt-2 bg-slate-50 font-semibold p-10 font-manrope text-base mr-1 rounded-xl pl-10">
+        <div className="flex flex-col justify-start pt-4 items-start mt-2 border-2 border-slate-100 gap-2 bg-slate-50 font-semibold p-12 font-manrope text-base mr-1  pl-10">
           <h3 className="text-base font-semibold">Ingredients</h3>
           <div className="flex flex-col">
             <input
@@ -369,7 +307,7 @@ function NewSub() {
                 <div>
                   {(
                     ingredient.item_quantity * ingredient.item_pricePerUnit
-                  ).toFixed(2)}
+                  ).toFixed(3)}
                   $
                 </div>
                 <button
@@ -383,7 +321,7 @@ function NewSub() {
           </div>
         </div>
         {/* SubRecipes */}
-        <div className="flex flex-col justify-start pt-4 items-start mt-2 bg-slate-50 font-semibold p-10 font-manrope text-md mr-1 rounded-xl pl-10 gap-1">
+        <div className="flex flex-col justify-start pt-4 items-start mt-2 border-2 border-slate-100 bg-slate-50 font-semibold p-12 font-manrope text-md mr-1  pl-10 gap-1">
           <h3 className=" font-semibold text-lg">Sub Recipes</h3>
 
           <div className="flex flex-col ">
@@ -404,6 +342,13 @@ function NewSub() {
                   className="w-20 pl-2 py-1 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
                   placeholder="Quantity"
                 />
+                <div>
+                  {(
+                    subrecipe.priced_sub_recipe_quantity *
+                    subrecipe.priced_sub_recipe_pricePerUnit
+                  ).toFixed(2)}
+                  $
+                </div>
                 <button
                   onClick={() => handleDeleteSub(subrecipe.id)}
                   className="bg-red-500 text-white p-1 rounded hover:bg-red-700"

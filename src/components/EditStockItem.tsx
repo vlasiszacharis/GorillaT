@@ -1,31 +1,19 @@
 import React, { FormEvent } from "react";
-import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
 import { IoClose } from "react-icons/io5";
-import { BASE_URL } from "../config/BaseUrl";
+import { putStockItem } from "../utils/api/apiClient";
+import { EditStockProps } from "../types/apiClientTypes";
 
-const editStockItem = async (editStockItem: any) => {
-  const { data } = await axios.put(
-    `${BASE_URL}/api/v1/stock/items/`,
-    editStockItem
-  );
-  return data;
-};
-
-interface EditStockItemProps {
-  setToggleEdit: (value: boolean) => void;
-  supplierName: string;
-  supplierCode: string;
-}
 function EditStockItem({
   setToggleEdit,
   supplierName,
   supplierCode,
-}: EditStockItemProps) {
+}: EditStockProps) {
   const queryClient = useQueryClient();
-  const mutation = useMutation(editStockItem, {
+
+  const mutation = useMutation(putStockItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries("fetchStockItem");
+      queryClient.invalidateQueries("StockItem");
     },
     onError: (error) => {
       console.error("Error editing supplier:", error);

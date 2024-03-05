@@ -1,13 +1,9 @@
 import React from "react";
-import axios from "axios";
 import { useQuery } from "react-query";
-import { BASE_URL } from "../config/BaseUrl";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-const getStockSubRecipe = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/stock/subrecipes`);
-  return response.data;
-};
+import { getStockSubRecipe } from "../../utils/api/apiClient";
+
 function SubRecipesStock() {
   const { data: items, isLoading: subLoading } = useQuery(
     "stockSubRecipe",

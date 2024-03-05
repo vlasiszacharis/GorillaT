@@ -4,42 +4,19 @@ import { FaPlus } from "react-icons/fa";
 import { IoScanOutline } from "react-icons/io5";
 import { MdInsertDriveFile } from "react-icons/md";
 import { useState } from "react";
-import AddStockItem from "../components/AddStockItem";
-import Modal from "../components/Modal";
+import AddStockItem from "../../components/AddStockItem";
+import Modal from "../../components/Modal";
 import { MdOutlineStoreMallDirectory } from "react-icons/md";
-
-import axios from "axios";
-
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { useQuery, useMutation, useQueryClient } from "react-query";
-
-import EditStockItem from "../components/EditStockItem";
+import EditStockItem from "../../components/EditStockItem";
 import { DataGrid } from "@mui/x-data-grid";
-import LoadingSpinner from "../components/LoadingSpinner";
-import { BASE_URL } from "../config/BaseUrl";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { GridColDef } from "@mui/x-data-grid";
-
-import SubRecipesStock from "./SubRecipesStock";
-const fetchStockItem = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/stock/items`);
-  return response.data;
-};
-
-interface DeleteStockItemProps {
-  item_supplier_name: string;
-  item_supplier_code: string;
-}
-
-const deleteStockItem = async ({
-  item_supplier_name,
-  item_supplier_code,
-}: DeleteStockItemProps) => {
-  const response = await axios.delete(
-    `${BASE_URL}/api/v1/stock/items/${item_supplier_name}/${item_supplier_code}`
-  );
-  return response.data;
-};
+import SubRecipesStock from "../SubRecipesStock/SubRecipesStock";
+import { deleteStockItem, getStockItems } from "../../utils/api/apiClient";
+import { StockItem } from "../../types/apiClientTypes";
 
 function Stock() {
   const [isActive, setIsActive] = useState(true); // true for Ingredients, false for SubRecipes
@@ -54,7 +31,7 @@ function Stock() {
   // Delete Stock Item
   const mutation = useMutation(deleteStockItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries("fetchStockItem");
+      queryClient.invalidateQueries("StockItem");
     },
     onError: (error) => {
       console.error("Error deleting item:", error);
@@ -72,7 +49,7 @@ function Stock() {
     mutation.mutate(itemData);
   };
 
-  const { data, isLoading } = useQuery("fetchStockItem", fetchStockItem);
+  const { data, isLoading } = useQuery("StockItem", getStockItems);
   if (isLoading)
     return (
       <div>
@@ -155,10 +132,11 @@ function Stock() {
     },
   ];
 
-  const rows = data.map((item: any, index: any) => ({
-    id: index,
-    ...item,
-  }));
+  const rows: StockItem[] =
+    data?.map((item: any, index: any) => ({
+      id: index,
+      ...item,
+    })) ?? [];
 
   return (
     <>

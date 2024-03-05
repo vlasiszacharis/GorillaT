@@ -1,29 +1,26 @@
 import React from "react";
-import { CiFilter } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
 import { IoScanOutline } from "react-icons/io5";
 import { MdInsertDriveFile } from "react-icons/md";
 import { useState } from "react";
-import AddItem from "../components/AddItem";
-import Modal from "../components/Modal";
+import AddItem from "../../components/AddItem";
+import Modal from "../../components/Modal";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
 import { useQuery } from "react-query";
-import axios from "axios";
-import { BASE_URL } from "../config/BaseUrl";
+import Button from "../../components/Button";
 import { DataGrid } from "@mui/x-data-grid";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { GridColDef } from "@mui/x-data-grid";
-const fetchItem = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/items`);
-  return response.data;
-};
+import { getItems } from "../../utils/api/apiClient";
+import { Ingredient } from "../../types/apiClientTypes";
+
 function Inventory() {
   const [toggleItem, setToggleItem] = useState(false);
   const handleItem = () => {
     setToggleItem(!toggleItem);
   };
-  const { data, isLoading } = useQuery("fetchInventoryItem", fetchItem);
+  const { data, isLoading } = useQuery("Items", getItems);
   if (isLoading)
     return (
       <div>
@@ -112,43 +109,49 @@ function Inventory() {
     },
   ];
 
-  const rows = data.map((inventory: any, index: any) => ({
-    id: index,
-    ...inventory,
-  }));
+  const rows: Ingredient[] =
+    data?.map((inventory: any, index: any) => ({
+      id: index,
+      ...inventory,
+    })) ?? [];
+
   return (
     <>
-      <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70  font-semibold bg-slate-100">
-        <div className="flex flex-row justify-end gap-4 ">
-          <div className="flex flex-row ">
-            <button>
-              <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                <CiFilter size={26} /> <span>Filter</span>
-              </div>
-            </button>
-          </div>
+      <div className=" p-4 pr-20  font-manrope text-l text-black text-opacity-70  font-semibold bg-slate-100">
+        <div className="flex flex-row justify-end  ">
+          <div className="flex flex-row "></div>
           <div className="flex flex-row">
-            <button onClick={handleItem}>
-              <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                <FaPlus size={26} /> <span>New Item</span>
-              </div>
-            </button>
+            <div onClick={handleItem}>
+              <Button
+                message={"Add Item"}
+                bgColor={"bg-blue-600"}
+                hoverBgColor={"hover:bg-custom-navy"}
+                textColor={"white"}
+                icon={<FaPlus size={20} />}
+              />
+            </div>
           </div>
           <div className="flex flex-row ">
-            <button>
-              <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                <IoScanOutline size={26} />
-                <span>Scan</span>
-              </div>
-            </button>
+            <div>
+              <Button
+                message={"Scan"}
+                bgColor={"bg-blue-600"}
+                hoverBgColor={"hover:bg-custom-navy"}
+                textColor={"white"}
+                icon={<IoScanOutline size={20} />}
+              />
+            </div>
           </div>
-          <div className="flex flex-row hover:text-black hover:underline">
-            <button>
-              <div className="flex flex-row gap-2">
-                <MdInsertDriveFile size={26} />
-                <span>Insert</span>
-              </div>
-            </button>
+          <div className="flex flex-row  ">
+            <div>
+              <Button
+                message={"Insert"}
+                bgColor={"bg-blue-600"}
+                hoverBgColor={"hover:bg-custom-navy"}
+                textColor={"white"}
+                icon={<MdInsertDriveFile size={20} />}
+              />{" "}
+            </div>
           </div>
         </div>
       </div>

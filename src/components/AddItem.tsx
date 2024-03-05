@@ -1,24 +1,13 @@
 import React from "react";
 import { IoClose } from "react-icons/io5";
 import { useState } from "react";
-import { BASE_URL } from "../config/BaseUrl";
 import { useMutation, useQuery, useQueryClient } from "react-query";
-import axios from "axios";
 import { FormEvent, ChangeEvent } from "react";
 import LoadingSpinner from "./LoadingSpinner";
-const postItem = async (addItem: any) => {
-  const response = await axios.post(`${BASE_URL}/api/v1/items`, addItem);
-  return response.data;
-};
+import { postItem } from "../utils/api/apiClient";
+import { getSuppliers } from "../utils/api/apiClient";
+import { AddItemPros } from "../types/apiClientTypes";
 
-const fetchSupplier = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/suppliers`);
-  return response.data;
-};
-
-interface AddItemPros {
-  setToggleItem: (value: boolean) => void;
-}
 function AddItem({ setToggleItem }: AddItemPros) {
   const [selectedSupplier, setSupplier] = useState("Global");
 
@@ -78,7 +67,7 @@ function AddItem({ setToggleItem }: AddItemPros) {
   };
 
   // Fetch Suppliers ->Supplier Name select
-  const { data, isLoading } = useQuery("dataKey", fetchSupplier);
+  const { data, isLoading } = useQuery("suppliers", getSuppliers);
   if (isLoading)
     return (
       <div>
@@ -98,7 +87,7 @@ function AddItem({ setToggleItem }: AddItemPros) {
           <div className="flex flex-row gap-4 p-4 pr-8 items-start justify-center">
             <span className="font-bold">Supplier Name</span>
             <select value={selectedSupplier} onChange={handleSupplier}>
-              {data.map((supplier: any, index: any) => (
+              {data?.map((supplier: any, index: any) => (
                 <option key={index}>{supplier.supplier_name}</option>
               ))}
             </select>

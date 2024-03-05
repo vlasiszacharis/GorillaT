@@ -1,16 +1,16 @@
 import React from "react";
 import { FaBookOpen } from "react-icons/fa";
 import { NavLink } from "react-router-dom";
-import Suppliers from "./pages/Suppliers";
-import Report from "./pages/Report";
-import Settings from "./pages/Settings";
-import Stock from "./pages/Stock";
-import Ingredients from "./pages/Ingredients";
-import SubRecipes from "./pages/SubRecipes";
+import Suppliers from "./pages/Suppliers/Suppliers";
+import Report from "./pages/Report/Report";
+import Settings from "./pages/Settings/Settings";
+import Stock from "./pages/Stock/Stock";
+import Ingredients from "./pages/Ingredients/Ingredients";
+import SubRecipes from "./pages/SubRecipes/SubRecipes";
 
-import Dashboard from "./pages/Dashboard";
-import Inventory from "./pages/Inventory";
-import Recipes from "./pages/Recipes";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import Inventory from "./pages/Inventory/Inventory";
+import Recipes from "./pages/Recipes/Recipes";
 import { Routes, Route } from "react-router-dom";
 import { MdOutlineInventory } from "react-icons/md";
 import { FaBook } from "react-icons/fa";
@@ -22,9 +22,9 @@ import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { useState } from "react";
 import { MdOutlineWarehouse } from "react-icons/md";
-import SubRecipesStock from "./pages/SubRecipesStock";
+import SubRecipesStock from "./pages/SubRecipesStock/SubRecipesStock";
 import { Tooltip } from "react-tooltip";
-import NewSub from "./pages/NewSub";
+import NewSub from "./pages/AddSubRecipe/NewSub";
 
 function App() {
   const [isCollapsed, setIsCollapsed] = useState(false);

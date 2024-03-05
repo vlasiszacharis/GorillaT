@@ -1,39 +1,26 @@
-/* eslint-disable array-callback-return */
 import React from "react";
-import { BASE_URL } from "../config/BaseUrl";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
-import LoadingSpinner from "../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useState } from "react";
-import axios from "axios";
-import EditSupplier from "../components/EditSupplier";
-import Modal from "../components/Modal";
+import EditSupplier from "../../components/EditSupplier";
+import Modal from "../../components/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import { FaRegSquarePlus } from "react-icons/fa6";
 import { TbCoins } from "react-icons/tb";
 import { MdOutlineStoreMallDirectory } from "react-icons/md";
-import AddSupplier from "../components/AddSupplier";
+import AddSupplier from "../../components/AddSupplier";
 import { GridColDef } from "@mui/x-data-grid";
-
-const fetchSuppliers = async () => {
-  const response = await axios.get(`${BASE_URL}/api/v1/suppliers`);
-  return response.data;
-};
-
-const deleteSupplier = async (supplier_afm: number) => {
-  const response = await axios.delete(
-    `${BASE_URL}/api/v1/suppliers/${supplier_afm}`
-  );
-  return response.data;
-};
+import { getSuppliers, deleteSupplier } from "../../utils/api/apiClient";
+import { Supplier } from "../../types/apiClientTypes";
 
 function SuppliersExcel() {
   const queryClient = useQueryClient();
   // Post Suppliers
   const mutation = useMutation(deleteSupplier, {
     onSuccess: () => {
-      queryClient.invalidateQueries("dataKey");
+      queryClient.invalidateQueries("suppliers");
     },
     onError: (error) => {
       console.error("Error deleting supplier:", error);
@@ -47,7 +34,7 @@ function SuppliersExcel() {
     setToggleSupplier(!toggleSupplier);
   };
   // Get Suppliers
-  const { data, error, isLoading } = useQuery("dataKey", fetchSuppliers);
+  const { data, error, isLoading } = useQuery("suppliers", getSuppliers);
 
   if (isLoading) return <LoadingSpinner />;
   if (error) {
@@ -73,14 +60,6 @@ function SuppliersExcel() {
     event.stopPropagation();
     mutation.mutate(supplier_afm);
   };
-
-  interface Supplier {
-    id: number;
-    supplier_name: string;
-    supplier_email: string;
-    supplier_afm: string;
-    supplier_webpage: string;
-  }
 
   const columns: GridColDef[] = [
     {
@@ -150,10 +129,11 @@ function SuppliersExcel() {
     },
   ];
 
-  const rows = data.map((supplier: any, index: any) => ({
-    id: index,
-    ...supplier,
-  }));
+  const rows: Supplier[] =
+    data?.map((supplier: any, index: any) => ({
+      id: index,
+      ...supplier,
+    })) ?? [];
 
   if (isLoading)
     return (
