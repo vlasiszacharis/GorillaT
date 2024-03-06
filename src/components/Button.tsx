@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ButtonProps } from "./types/componentTypes";
+import { ButtonProps } from "./types/componentsTypes";
 function Button({
   message,
   bgColor,
@@ -12,7 +12,7 @@ function Button({
     <>
       <div className="p-1  flex flew-row  font-manrope">
         <button
-          className={`items-center min-w-28 justify-center p-2 px-3  ${bgColor} ${hoverBgColor} flex flex-row gap-2 rounded-xl text-${textColor}`}
+          className={`items-center w-32  h-10 justify-center p-2 px-3  ${bgColor} ${hoverBgColor} flex flex-row gap-2 rounded-lg text-${textColor}`}
         >
           <div>{icon}</div>
           <div>{message}</div>

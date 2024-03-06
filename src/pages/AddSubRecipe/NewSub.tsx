@@ -12,13 +12,15 @@ import {
   getSubRecipes,
 } from "../../utils/api/apiClient";
 import {
-  Ingredient,
-  IngredientID,
-  IngredientPost,
   PricedSubRecipeModelID,
   PricedSubRecipeModel,
   PricedSubRecipePost,
 } from "../../types/apiClientTypes";
+import {
+  Ingredient,
+  IngredientID,
+  IngredientPost,
+} from "../Inventory/inventoryTypes";
 
 function NewSub() {
   const queryClient = useQueryClient();

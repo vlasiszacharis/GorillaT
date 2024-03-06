@@ -2,8 +2,8 @@ import React from "react";
 import { useMutation, useQueryClient } from "react-query";
 import { IoClose } from "react-icons/io5";
 import { FormEvent, MouseEvent } from "react";
-import { putStockItem } from "../utils/api/apiClient";
-import { EditStockProps } from "../types/apiClientTypes";
+import { putStockItem } from "../../utils/api/apiClient";
+import { EditStockProps } from "../../types/apiClientTypes";
 
 function EditStockItem({
   setToggleEdit,

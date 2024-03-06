@@ -11,6 +11,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import Typography from "@mui/material/Typography";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getSubRecipes } from "../../utils/api/apiClient";
+import Button from "../../components/Button";
 
 function SubRecipes() {
   const [toggleSubRecipe, setToggleSubRecipe] = useState(false);
@@ -74,20 +75,17 @@ function SubRecipes() {
             Sub Recipes
           </h2>
           <div className="flex flex-row justify-end  gap-4 ">
-            <div className="flex flex-row ">
-              <button>
-                <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                  <CiFilter size={26} /> <span>Filter</span>
-                </div>
-              </button>
-            </div>
             <div className="flex flex-row">
-              <button onClick={handleClick}>
-                <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                  <FaPlus size={26} />{" "}
-                  <Link to="/newsubrecipe">New Sub Recipe</Link>
-                </div>
-              </button>
+              <div onClick={handleClick}>
+                <Button
+                  message={"Add Item"}
+                  bgColor={"bg-blue-600"}
+                  hoverBgColor={"hover:bg-custom-navy"}
+                  textColor={"white"}
+                  icon={<FaPlus size={20} />}
+                />
+              </div>
+              <Link to="/newsubrecipe">New Sub Recipe</Link>
             </div>
           </div>
         </div>

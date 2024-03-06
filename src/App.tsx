@@ -34,7 +34,7 @@ function App() {
   };
   return (
     <>
-      <div className="min-h-screen grid grid-rows-[auto,1fr]">
+      <div className="min-h-screen  grid grid-rows-[auto,1fr]">
         <div className="flex flex-row min-h-full font-manrope">
           <aside
             className={`  pt-16 rounded-r-3xl  bg-custom-navy ${
@@ -65,7 +65,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -82,7 +82,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -99,7 +99,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -116,7 +116,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -133,7 +133,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -150,7 +150,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -167,7 +167,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }
@@ -184,7 +184,7 @@ function App() {
                 className={({ isActive }) =>
                   `flex items-center justify-start gap-3 mb-2 px-4 py-2 text-lg ${
                     isActive
-                      ? "bg-white font-bold text-custom-navy rounded-2xl"
+                      ? "bg-white font-bold text-custom-navy rounded-lg"
                       : "text-white hover:bg-white/30"
                   }`
                 }

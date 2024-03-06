@@ -30,28 +30,6 @@ export interface EditStockProps {
 export interface AddStockItemProps {
   setToggleItem: Function;
 }
-//Inventory
-export interface Ingredient {
-  item_supplier_name: string;
-  item_supplier_code: string;
-  item_name: string;
-  item_description: string;
-  item_measurement_unit: string;
-  item_category: string;
-  item_quantity: number;
-  item_price: number;
-  item_pricePerUnit: number;
-}
-export interface IngredientID extends Ingredient {
-  id: string;
-}
-export interface IngredientPost {
-  type: string;
-  title: string;
-  supplier_code: string;
-  measurement_unit: string;
-  quantity: number;
-}
 
 export interface SimpleIngredientModel {
   quantity: number;

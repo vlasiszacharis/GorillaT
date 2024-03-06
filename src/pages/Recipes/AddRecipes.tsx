@@ -5,9 +5,9 @@ import { FaPlus } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 
 interface AddRecipeProps {
-  setToggleRecipe: (value: boolean) => void;
+  setToggleRecipe: Function;
 }
-function AddRecipe({ setToggleRecipe }: AddRecipeProps) {
+function AddRecipes({ setToggleRecipe }: AddRecipeProps) {
   const handleClick = () => {
     setToggleRecipe(false);
   };
@@ -142,4 +142,4 @@ function AddRecipe({ setToggleRecipe }: AddRecipeProps) {
   );
 }
 
-export default AddRecipe;
+export default AddRecipes;

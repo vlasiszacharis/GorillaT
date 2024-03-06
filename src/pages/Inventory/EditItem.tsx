@@ -1,19 +1,19 @@
 import React, { FormEvent } from "react";
+import { EditItemProps } from "./inventoryTypes";
 import { useMutation, useQueryClient } from "react-query";
+import { putItem } from "../../utils/api/apiClient";
 import { IoClose } from "react-icons/io5";
-import { putStockItem } from "../utils/api/apiClient";
-import { EditStockProps } from "../types/apiClientTypes";
 
-function EditStockItem({
+function EditItem({
   setToggleEdit,
-  supplierName,
-  supplierCode,
-}: EditStockProps) {
+  item_supplier_name,
+  item_supplier_code,
+}: EditItemProps) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation(putStockItem, {
+  const mutation = useMutation(putItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries("StockItem");
+      queryClient.invalidateQueries("Item");
     },
     onError: (error) => {
       console.error("Error editing supplier:", error);
@@ -34,19 +34,27 @@ function EditStockItem({
     const item_category = (
       form.elements.namedItem("item_category") as HTMLInputElement
     )?.value;
+    const item_description = (
+      form.elements.namedItem("item_description") as HTMLInputElement
+    )?.value;
     const item_quantity = (
       form.elements.namedItem("item_quantity") as HTMLInputElement
     )?.value;
-    const editStockItem = {
-      item_supplier_name: supplierName,
-      item_supplier_code: supplierCode,
+    const item_price = (
+      form.elements.namedItem("item_price") as HTMLInputElement
+    )?.value;
+    const editItem = {
+      item_supplier_name: item_supplier_name,
+      item_supplier_code: item_supplier_code,
       item_name,
+      item_description,
       item_measurement_unit,
       item_category,
       item_quantity,
+      item_price,
     };
 
-    mutation.mutate(editStockItem);
+    mutation.mutate(editItem);
   };
   const handleClick = () => {
     setToggleEdit(false);
@@ -62,10 +70,10 @@ function EditStockItem({
             <span className="font-bold">Supplier Name</span>
             <input
               name="item_supplier_code"
-              value={supplierName}
+              value={item_supplier_name}
               disabled
               className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder={supplierName}
+              placeholder={item_supplier_name}
             ></input>
           </div>
 
@@ -73,10 +81,10 @@ function EditStockItem({
             <span className=" font-bold">Supplier Code</span>
             <input
               name="item_supplier_code"
-              value={supplierCode}
+              value={item_supplier_code}
               disabled
               className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder={supplierCode}
+              placeholder={item_supplier_code}
             ></input>
           </div>
 
@@ -113,7 +121,22 @@ function EditStockItem({
               placeholder="Add Quantity"
             ></input>
           </div>
-
+          <div className="flex flex-row gap-8 p-4 items-start justify-end">
+            <span className=" font-bold">Price</span>
+            <input
+              name="item_price"
+              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+              placeholder="item_price "
+            ></input>
+          </div>
+          <div className="flex flex-row gap-8 p-4 items-start justify-end">
+            <span className=" font-bold">Description</span>
+            <input
+              name=" "
+              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+              placeholder="item_description "
+            ></input>
+          </div>
           <div className="absolute top-2 right-2 ">
             <button onClick={handleClick}>
               <IoClose size={30} />
@@ -139,4 +162,4 @@ function EditStockItem({
   );
 }
 
-export default EditStockItem;
+export default EditItem;

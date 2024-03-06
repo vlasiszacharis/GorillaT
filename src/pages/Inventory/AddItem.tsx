@@ -3,10 +3,10 @@ import { IoClose } from "react-icons/io5";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import { FormEvent, ChangeEvent } from "react";
-import LoadingSpinner from "./LoadingSpinner";
-import { postItem } from "../utils/api/apiClient";
-import { getSuppliers } from "../utils/api/apiClient";
-import { AddItemPros } from "../types/apiClientTypes";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { postItem } from "../../utils/api/apiClient";
+import { getSuppliers } from "../../utils/api/apiClient";
+import { AddItemPros } from "../../types/apiClientTypes";
 
 function AddItem({ setToggleItem }: AddItemPros) {
   const [selectedSupplier, setSupplier] = useState("Global");

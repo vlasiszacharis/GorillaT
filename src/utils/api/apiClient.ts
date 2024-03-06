@@ -2,12 +2,11 @@ import { BASE_URL } from "../config/BaseUrl";
 import axios from "axios";
 import {
   StockItem,
-  Ingredient,
   PricedSubRecipeModel,
   DeleteStockItemProps,
   Supplier,
 } from "../../types/apiClientTypes";
-
+import { Ingredient } from "../../pages/Inventory/inventoryTypes";
 //Suppliers , "Suppliers"
 
 export const getSuppliers = async (): Promise<Supplier[]> => {
@@ -64,8 +63,13 @@ export const getItems = async (): Promise<Ingredient[]> => {
   return response.data;
 };
 
-export const postItem = async (addItem: any): Promise<Ingredient[]> => {
+export const postItem = async (addItem: any): Promise<Ingredient> => {
   const response = await axios.post(`${BASE_URL}/api/v1/items`, addItem);
+  return response.data;
+};
+
+export const putItem = async (editItem: any): Promise<Ingredient> => {
+  const response = await axios.post(`${BASE_URL}/api/v1/items`, editItem);
   return response.data;
 };
 //Sub-Recipes  , "SubRecipes"

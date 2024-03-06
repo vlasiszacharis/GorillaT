@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { IoScanOutline } from "react-icons/io5";
 import { MdInsertDriveFile } from "react-icons/md";
 import { useState } from "react";
-import AddItem from "../../components/AddItem";
+import AddItem from "./AddItem";
 import Modal from "../../components/Modal";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
@@ -13,12 +13,20 @@ import { DataGrid } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { GridColDef } from "@mui/x-data-grid";
 import { getItems } from "../../utils/api/apiClient";
-import { Ingredient } from "../../types/apiClientTypes";
-
+import { Ingredient } from "./inventoryTypes";
+import EditItem from "./EditItem";
 function Inventory() {
   const [toggleItem, setToggleItem] = useState(false);
+  const [toggleEdit, setToggleEdit] = useState(false);
+  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+
   const handleItem = () => {
     setToggleItem(!toggleItem);
+  };
+
+  const handleEdit = (index: any) => {
+    setToggleEdit(!toggleEdit);
+    setSelectedItemIndex(index);
   };
   const { data, isLoading } = useQuery("Items", getItems);
   if (isLoading)
@@ -96,9 +104,15 @@ function Inventory() {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: (params: any) => (
+      renderCell: (cellValues) => (
         <div className="flex flex-row gap-4">
-          <button className="bg-blue-500 p-3 hover:bg-blue-600 rounded-md">
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              handleEdit(cellValues.id);
+            }}
+            className="bg-blue-500 p-2 hover:bg-blue-700 rounded-md"
+          >
             <CiEdit />
           </button>
           <button className="bg-red-500 p-3 hover:bg-red-600 rounded-md">
@@ -157,6 +171,15 @@ function Inventory() {
       </div>
       {toggleItem && <AddItem setToggleItem={setToggleItem} />}
       {toggleItem && <Modal />}
+      {toggleEdit && data && data.length > 0 && (
+        <EditItem
+          setToggleEdit={setToggleEdit}
+          item_supplier_name={data[selectedItemIndex].item_supplier_name}
+          item_supplier_code={data[selectedItemIndex].item_supplier_code}
+        />
+      )}
+
+      {toggleEdit && <Modal />}
 
       <div
         className="pl-1"
@@ -176,6 +199,15 @@ function Inventory() {
               fontFamily: "Manrope, sans-serif",
               fontWeight: "550",
               width: "100%",
+              borderRight: "1px solid #e0e0e0",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottom: "2px solid #e0e0e0",
+            },
+            "& .MuiDataGrid-row": {
+              "& .MuiDataGrid-cell:last-of-type": {
+                borderRight: "none",
+              },
             },
           }}
         />

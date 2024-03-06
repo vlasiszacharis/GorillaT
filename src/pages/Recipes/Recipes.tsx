@@ -3,7 +3,7 @@ import { FaPlus } from "react-icons/fa";
 import { IoIosHome } from "react-icons/io";
 import { FaFilter } from "react-icons/fa6";
 import { useState } from "react";
-import AddRecipe from "../../components/AddRecipe";
+import AddRecipes from "./AddRecipes";
 import Modal from "../../components/Modal";
 import { FaSearch } from "react-icons/fa";
 function Recipes() {
@@ -129,7 +129,7 @@ function Recipes() {
           <button className=" font-semibold py-2 px-3  rounded">Filter</button>
         </div>
       </div>
-      {toggleRecipe && <AddRecipe setToggleRecipe={setToggleRecipe} />}
+      {toggleRecipe && <AddRecipes setToggleRecipe={setToggleRecipe} />}
       {toggleRecipe && <Modal />}
     </>
   );
