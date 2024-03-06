@@ -47,12 +47,17 @@ function SubRecipes() {
                 </button>
               </div>
               <div className="flex flex-row">
-                <button onClick={handleClick}>
-                  <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                    <FaPlus size={26} />{" "}
-                    <Link to="/newsubrecipe">New Sub Recipe</Link>
+                <Link to="/newsubrecipe">
+                  <div onClick={handleClick}>
+                    <Button
+                      message={"Add Item"}
+                      bgColor={"bg-blue-600"}
+                      hoverBgColor={"hover:bg-custom-navy"}
+                      textColor={"white"}
+                      icon={<FaPlus size={20} />}
+                    />
                   </div>
-                </button>
+                </Link>
               </div>
             </div>
           </div>
@@ -76,16 +81,17 @@ function SubRecipes() {
           </h2>
           <div className="flex flex-row justify-end  gap-4 ">
             <div className="flex flex-row">
-              <div onClick={handleClick}>
-                <Button
-                  message={"Add Item"}
-                  bgColor={"bg-blue-600"}
-                  hoverBgColor={"hover:bg-custom-navy"}
-                  textColor={"white"}
-                  icon={<FaPlus size={20} />}
-                />
-              </div>
-              <Link to="/newsubrecipe">New Sub Recipe</Link>
+              <Link to="/newsubrecipe">
+                <div onClick={handleClick}>
+                  <Button
+                    message={"SubRecipe"}
+                    bgColor={"bg-blue-600"}
+                    hoverBgColor={"hover:bg-custom-navy"}
+                    textColor={"white"}
+                    icon={<FaPlus size={20} />}
+                  />
+                </div>
+              </Link>
             </div>
           </div>
         </div>

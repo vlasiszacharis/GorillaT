@@ -69,7 +69,7 @@ export const postItem = async (addItem: any): Promise<Ingredient> => {
 };
 
 export const putItem = async (editItem: any): Promise<Ingredient> => {
-  const response = await axios.post(`${BASE_URL}/api/v1/items`, editItem);
+  const response = await axios.put(`${BASE_URL}/api/v1/items`, editItem);
   return response.data;
 };
 //Sub-Recipes  , "SubRecipes"

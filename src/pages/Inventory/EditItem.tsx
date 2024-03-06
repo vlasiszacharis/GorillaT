@@ -13,7 +13,7 @@ function EditItem({
 
   const mutation = useMutation(putItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries("Item");
+      queryClient.invalidateQueries("Items");
     },
     onError: (error) => {
       console.error("Error editing supplier:", error);
@@ -44,8 +44,8 @@ function EditItem({
       form.elements.namedItem("item_price") as HTMLInputElement
     )?.value;
     const editItem = {
-      item_supplier_name: item_supplier_name,
-      item_supplier_code: item_supplier_code,
+      item_supplier_name,
+      item_supplier_code,
       item_name,
       item_description,
       item_measurement_unit,
@@ -132,9 +132,9 @@ function EditItem({
           <div className="flex flex-row gap-8 p-4 items-start justify-end">
             <span className=" font-bold">Description</span>
             <input
-              name=" "
+              name="item_description"
               className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder="item_description "
+              placeholder="item_description"
             ></input>
           </div>
           <div className="absolute top-2 right-2 ">
