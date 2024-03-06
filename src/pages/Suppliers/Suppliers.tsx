@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useState } from "react";
-import EditSupplier from "./EditSupplier";
+// import EditSupplier from "./EditSupplier";
 import Modal from "../../components/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 import AddSupplier from "./AddSupplier";
@@ -187,13 +187,13 @@ function SuppliersExcel() {
           }}
         />
       </div>
-      {toggleEdit && (
+      {/* {toggleEdit && (
         <EditSupplier
           setToggleEdit={setToggleEdit}
           supplierName={""}
           supplierCode={""}
         />
-      )}
+      )} */}
       {toggleEdit && <Modal />}
       {toggleSupplier && <AddSupplier setToggleSupplier={setToggleSupplier} />}
       {toggleSupplier && <Modal />}
