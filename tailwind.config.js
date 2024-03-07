@@ -4,15 +4,15 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        manrope: ['"Manrope"', "sans-serif"], // Ensure the font name is correctly quoted
+        manrope: ['"Manrope"', "sans-serif"],
       },
       spacing: {
-        82: "20.5rem", // Assuming top-4 is 1rem. Tailwind's default scale already includes this.
-        84: "21rem", // Assuming top-8 is 2rem. Tailwind's default scale already includes this.
-        87: "21.7rem", // Custom value for top-88 as an example
+        82: "20.5rem",
+        84: "21rem",
+        87: "21.7rem",
       },
       colors: {
-        "custom-navy": "#2f53da", // Add this line
+        "custom-navy": "#2f53da",
       },
       padding: {
         18: "4.5rem",

@@ -2,6 +2,7 @@ import React from "react";
 import { MdMapsHomeWork } from "react-icons/md";
 import { TbCoins } from "react-icons/tb";
 import { FaBook } from "react-icons/fa";
+import { MdAccountCircle } from "react-icons/md";
 
 function Dashboard() {
   return (
@@ -9,7 +10,9 @@ function Dashboard() {
       <div className="flex flex-col h-screen bg-slate-100">
         <div className="flex flex-row justify-between items-center p-6 pr-16 font-manrope font-bold text-xl">
           <h2 className="text-3xl font-bold">Botrini's</h2>
-          <button className="p-2 rounded-full bg-gray-200">Avatar</button>{" "}
+          <button className=" rounded-full ">
+            <MdAccountCircle size={40} />
+          </button>{" "}
         </div>
 
         <div className="grid p-2 gap-8 mr-6 ml-6 grid-cols-3 items-start justify-center flex-grow">

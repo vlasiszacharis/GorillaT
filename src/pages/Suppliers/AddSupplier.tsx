@@ -22,7 +22,7 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
   const queryClient = useQueryClient();
   const mutation = useMutation(postSuppliers, {
     onSuccess: () => {
-      queryClient.invalidateQueries("dataKey");
+      queryClient.invalidateQueries("Suppliers");
       setToggleSupplier(false);
     },
     onError: (error) => {
@@ -58,69 +58,62 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
     <>
       <div
         id="add_supplier"
-        className="absolute  z-10 top-20 left-1/3 bg-slate-100 pb-24 py-8 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md "
+        className="absolute z-50 mx-12 top-20 left-1/3 right-1/3 bg-slate-50 py-8 px-8 flex flex-col font-manrope text-l font-semibold rounded-md"
       >
-        <div className="flex flex-center items-center  w-full text-xl bg-slate-100">
-          {" "}
+        <div className="flex justify-center items-center w-full text-xl bg-slate-50 mb-4">
           Add Supplier
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-row gap-8 p-4 items-start justify-end">
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div className="flex flex-col">
             <span className="font-bold">Supplier Name</span>
             <input
               name="supplier_name"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+              className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
               placeholder="Add Supplier Name"
-            ></input>
+            />
           </div>
 
-          <div className="flex flex-row gap-8 p-4 items-start justify-end ">
-            <span className=" font-bold">Email Address</span>
+          <div className="flex flex-col">
+            <span className="font-bold">Email Address</span>
             <input
               name="supplier_email"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+              className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
               placeholder="Add Email Address"
-            ></input>
+            />
           </div>
 
-          <div className="flex flex-row gap-8 p-4 items-start justify-end">
-            <span className=" font-bold">Tax Number</span>
+          <div className="flex flex-col">
+            <span className="font-bold">Tax Number</span>
             <input
               name="supplier_afm"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+              className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
               placeholder="Add Tax Number"
-            ></input>
+            />
           </div>
 
-          <div className="flex flex-row gap-8 p-4 items-start justify-end">
-            <span className=" font-bold">Address</span>
+          <div className="flex flex-col">
+            <span className="font-bold">Address</span>
             <input
               name="supplier_webpage"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+              className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
               placeholder="Add Address"
-            ></input>
+            />
           </div>
 
-          <div className="absolute top-2 right-2 ">
-            <button className="cursor-pointer" onClick={handleClick}>
-              <IoClose size={30} />
-            </button>
-          </div>
-          <div className="absolute bottom-4 right-36 font-manrope text-l">
-            <button className="bg-blue-600 hover:bg-blue-700 w-28 font-normal justify-center items-center p-3 text-white rounded-md">
-              Reset
-            </button>
-          </div>
-          <div className="absolute bottom-4 right-4  font-manrope text-l">
-            {" "}
+          <div className="flex justify-end mt-4 px-2">
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 p-3 w-28 font-normal justify-center items-center text-white rounded-md"
+              className="bg-custom-navy hover:bg-blue-800 py-2 px-6 w-full justify-center items-center font-normal text-white rounded-md transition duration-150 ease-in-out"
             >
               Add
             </button>
           </div>
         </form>
+        <div className="absolute top-2 right-2">
+          <button className="cursor-pointer" onClick={handleClick}>
+            <IoClose size={30} />
+          </button>
+        </div>
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import { CiFilter } from "react-icons/ci";
+
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { useState } from "react";
@@ -39,13 +39,6 @@ function SubRecipes() {
               Sub Recipes
             </h2>
             <div className="flex flex-row justify-end  gap-4 ">
-              <div className="flex flex-row ">
-                <button>
-                  <div className="flex flex-row gap-2 hover:text-black hover:underline">
-                    <CiFilter size={26} /> <span>Filter</span>
-                  </div>
-                </button>
-              </div>
               <div className="flex flex-row">
                 <Link to="/newsubrecipe">
                   <div onClick={handleClick}>

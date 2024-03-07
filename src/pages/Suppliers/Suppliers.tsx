@@ -7,18 +7,19 @@ import { useState } from "react";
 // import EditSupplier from "./EditSupplier";
 import Modal from "../../components/Modal";
 import { DataGrid } from "@mui/x-data-grid";
-import AddSupplier from "./AddSupplier";
+
 import { GridColDef } from "@mui/x-data-grid";
 import { getSuppliers, deleteSupplier } from "../../utils/api/apiClient";
 import { Supplier } from "../../types/apiClientTypes";
 import SuppliersMenu from "./SuppliersMenu";
+import PopMessage from "../../components/PopMessage";
 
 function SuppliersExcel() {
   const queryClient = useQueryClient();
   // Post Suppliers
   const mutation = useMutation(deleteSupplier, {
     onSuccess: () => {
-      queryClient.invalidateQueries("suppliers");
+      queryClient.invalidateQueries("Suppliers");
     },
     onError: (error) => {
       console.error("Error deleting supplier:", error);
@@ -26,10 +27,9 @@ function SuppliersExcel() {
   });
 
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [toggleSupplier, setToggleSupplier] = useState(false);
 
   // Get Suppliers
-  const { data, error, isLoading } = useQuery("suppliers", getSuppliers);
+  const { data, error, isLoading } = useQuery("Suppliers", getSuppliers);
 
   if (isLoading) return <LoadingSpinner />;
   if (error) {
@@ -149,6 +149,8 @@ function SuppliersExcel() {
   return (
     <>
       <SuppliersMenu />
+      <PopMessage />
+
       <div
         style={{
           height: 660,
@@ -195,8 +197,6 @@ function SuppliersExcel() {
         />
       )} */}
       {toggleEdit && <Modal />}
-      {toggleSupplier && <AddSupplier setToggleSupplier={setToggleSupplier} />}
-      {toggleSupplier && <Modal />}
     </>
   );
 }

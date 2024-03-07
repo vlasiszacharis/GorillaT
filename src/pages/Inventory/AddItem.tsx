@@ -79,83 +79,132 @@ function AddItem({ setToggleItem }: AddItemPros) {
     <>
       <div
         id="add_supplier"
-        className="absolute  z-10 top-20 left-1/3 bg-slate-100 pb-24 py-6 gap-2 px-10 flex flex-col font-manrope text-l font-semibold rounded-md "
+        className="absolute z-40 top-20 left-1/3 right-1/3 mx-4 bg-slate-100 pb-4 py-8 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md"
       >
-        <div className="flex flex-col gap-4 p-2 items-center justify-center ">
-          <span className=" font-bold">New Items</span>
-
-          <div className="flex flex-row gap-4 p-4 pr-8 items-start justify-center">
-            <span className="font-bold">Supplier Name</span>
-            <select value={selectedSupplier} onChange={handleSupplier}>
-              {data?.map((supplier: any, index: any) => (
-                <option key={index}>{supplier.supplier_name}</option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-center items-center  w-full text-xl bg-slate-100">
-            {" "}
-            New Item
-          </div>
-          <form onSubmit={handleForm}>
-            <div className="grid grid-cols-3">
-              <input
-                className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none"
-                name="item_supplier_code"
-                type="text"
-                placeholder="ID Code"
-              />
-
-              <input
-                className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none"
-                name="item_name"
-                type="text"
-                placeholder="Item name"
-              />
-              <input
-                className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none"
-                name="item_description"
-                type="text"
-                placeholder="Item Description"
-              />
-              <select name="item_measurement_unit" required>
-                <option value="KG">KG</option>
-                <option value="G">G</option>
-                <option value="BOXES">Boxes</option>
-              </select>
-              <select name="item_category" required>
-                <option value="FRESH">FRESH</option>
-                <option value="FROZEN">FROZEN</option>
-                <option value="DRY">DRY</option>
-              </select>
-              <input
-                className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none"
-                name="item_quantity"
-                type="number"
-                placeholder="Quantiy"
-              />
-              <input
-                className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none"
-                name="item_price"
-                type="number"
-                placeholder="Price"
-              />
+        <div className="flex flex-col gap-4 p-2 items-center justify-center">
+          <div className="text-xl font-bold mb-4">Add Stock Item</div>
+          <form onSubmit={handleForm} className="w-full">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="supplier_name">
+                  Supplier Name
+                </label>
+                <select
+                  id="supplier_name"
+                  className="pl-1 mt-1 py-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  value={selectedSupplier}
+                  onChange={handleSupplier}
+                >
+                  {data?.map((supplier, index) => (
+                    <option key={index} value={supplier.supplier_name}>
+                      {supplier.supplier_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="id_code">
+                  ID Code
+                </label>
+                <input
+                  id="id_code"
+                  className=" pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  name="item_supplier_code"
+                  type="text"
+                  placeholder="ID Code"
+                />
+              </div>
+              <div className="flex flex-col ">
+                <label className="font-bold" htmlFor="item_name">
+                  Item Name
+                </label>
+                <input
+                  id="item_name"
+                  className="pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  name="item_name"
+                  type="text"
+                  placeholder="Item Name"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="item_description">
+                  Item Description
+                </label>
+                <input
+                  id="item_description"
+                  className="pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  name="item_description"
+                  type="text"
+                  placeholder="Item Description"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="unit">
+                  Unit
+                </label>
+                <select
+                  id="unit"
+                  name="item_measurement_unit"
+                  className="pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  required
+                >
+                  <option value="KG">KG</option>
+                  <option value="G">G</option>
+                  <option value="BOXES">Boxes</option>
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="category">
+                  Category
+                </label>
+                <select
+                  id="category"
+                  name="item_category"
+                  className="pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  required
+                >
+                  <option value="FRESH">FRESH</option>
+                  <option value="FROZEN">FROZEN</option>
+                  <option value="DRY">DRY</option>
+                </select>
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="quantity">
+                  Quantity
+                </label>
+                <input
+                  id="quantity"
+                  className="pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  name="item_quantity"
+                  type="number"
+                  placeholder="Quantity"
+                />
+              </div>
+              <div className="flex flex-col">
+                <label className="font-bold" htmlFor="price">
+                  Price
+                </label>
+                <input
+                  id="price"
+                  className="pl-1 py-1 mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                  name="item_price"
+                  type="number"
+                  placeholder="Price"
+                />
+              </div>
             </div>
-            <div className="absolute bottom-4 right-36 font-manrope text-l">
-              <button className="bg-blue-600 hover:bg-blue-700 w-28 font-normal justify-center items-center p-3 text-white rounded-md">
-                Reset
-              </button>
-            </div>
-            <div className="absolute bottom-4 right-4  font-manrope text-l">
-              {" "}
-              <button className="bg-green-600 hover:bg-green-700 p-3 w-28 font-normal justify-center items-center text-white rounded-md">
+            <div className="flex justify-end pt-8 pb-4 ">
+              <button
+                type="submit"
+                className="pl-1  bg-blue-600 w-full  hover:bg-blue-700 py-2 px-6 justify-center items-center font-normal text-white rounded-md transition duration-150 ease-in-out"
+              >
                 Add Item
               </button>
             </div>
           </form>
         </div>
-
-        <div className="absolute top-2 right-2 ">
-          <button onClick={handleClick}>
+        <div className="absolute top-2 right-2">
+          <button className="cursor-pointer" onClick={handleClick}>
             <IoClose size={30} />
           </button>
         </div>

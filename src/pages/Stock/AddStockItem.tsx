@@ -58,83 +58,94 @@ function AddStockItem({ setToggleItem }: AddStockItemProps) {
   };
   return (
     <>
-      <div
-        id="add_supplier"
-        className="absolute  z-10 top-20 left-1/3 bg-slate-100 pb-24 py-8 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md "
-      >
-        <div className="flex flex-row gap-4 p-4 pr-8 items-start justify-center">
-          <span className="font-bold">Supplier Name</span>
-          <select value={selectedSupplier} onChange={handleSupplier}>
-            {data?.map((supplier: any, index: number) => (
-              <option key={index}>{supplier.supplier_name}</option>
-            ))}
-          </select>
-        </div>
-        <form onSubmit={handleForm}>
-          <div className="flex flex-row gap-8 p-4 items-start justify-end ">
-            <span className=" font-bold">Supplier Code</span>
-            <input
-              name="item_supplier_code"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder="Add Supplier Code"
-            ></input>
+      <form onSubmit={handleForm}>
+        {" "}
+        <div
+          id="add_supplier"
+          className="absolute z-50 top-20 left-1/3 bg-slate-100 pb-8 py-8 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md"
+        >
+          <div className="text-2xl font-bold text-center mb-8">
+            Add Stock Item
           </div>
-
-          <div className="flex flex-row gap-8 p-4 items-start justify-end">
-            <span className=" font-bold">Item Name</span>
-            <input
-              name="item_name"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder="Add Item Name"
-            ></input>
+          <div className="grid grid-cols-2 gap-6">
+            <div className="flex flex-col">
+              <span className="font-bold">Supplier Name</span>
+              <select
+                className="mt-1 border pl-2 border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                value={selectedSupplier}
+                onChange={handleSupplier}
+              >
+                {data?.map((supplier, index) => (
+                  <option key={index} value={supplier.supplier_name}>
+                    {supplier.supplier_name}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">Supplier Code</span>
+              <input
+                name="item_supplier_code"
+                className="mt-1 py-1 w-full border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                placeholder="Add Supplier Code"
+              />
+            </div>
+            <div className="flex flex-col col-span-2">
+              <span className="font-bold">Item Name</span>
+              <input
+                name="item_name"
+                className="mt-1 py-1 w-full border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                placeholder="Add Item Name"
+              />
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">Unit</span>
+              <select
+                name="item_measurement_unit"
+                className="mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                required
+              >
+                <option value="KG">KG</option>
+                <option value="G">G</option>
+                <option value="BOXES">Boxes</option>
+              </select>
+            </div>
+            <div className="flex flex-col">
+              <span className="font-bold">Category</span>
+              <select
+                name="item_category"
+                className="mt-1 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                required
+              >
+                <option value="FRESH">FRESH</option>
+                <option value="FROZEN">FROZEN</option>
+                <option value="DRY">DRY</option>
+              </select>
+            </div>
+            <div className="flex flex-col col-span-2">
+              <span className="font-bold">Quantity</span>
+              <input
+                name="item_quantity"
+                className="mt-1 py-1 w-full border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                placeholder="Add Quantity"
+              />
+            </div>
           </div>
-
-          <div className="flex flex-row  gap-8 p-4 pr-24 items-start justify-center">
-            <span className="pr-8 font-bold">Unit</span>
-            <select name="item_measurement_unit" required>
-              <option value="KG">KG</option>
-              <option value="G">G</option>
-              <option value="BOXES">Boxes</option>
-            </select>
-          </div>
-          <div className="flex flex-row gap-8 p-4 pr-24  items-start justify-center">
-            <span className=" font-bold">Category</span>
-            <select name="item_category" required>
-              <option value="FRESH">FRESH</option>
-              <option value="FROZEN">FROZEN</option>
-              <option value="DRY">DRY</option>
-            </select>
-          </div>
-          <div className="flex flex-row gap-8 p-4 items-start justify-end">
-            <span className=" font-bold">Quantity</span>
-            <input
-              name="item_quantity"
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder="Add Quantity"
-            ></input>
-          </div>
-
-          <div className="absolute top-2 right-2 ">
-            <button onClick={handleClick}>
-              <IoClose size={30} />
-            </button>
-          </div>
-          <div className="absolute bottom-4 right-36 font-manrope text-l">
-            <button className="bg-blue-600 hover:bg-blue-700 w-28 font-normal justify-center items-center p-3 text-white rounded-md">
-              Reset
-            </button>
-          </div>
-          <div className="absolute bottom-4 right-4  font-manrope text-l">
-            {" "}
+          <div className="flex justify-end mt-4 px-2">
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 p-3 w-28 font-normal justify-center items-center text-white rounded-md"
+              className="bg-custom-navy hover:bg-blue-800 py-2 px-6 w-full justify-center items-center font-normal text-white rounded-md transition duration-150 ease-in-out"
             >
               Add
             </button>
           </div>
-        </form>
-      </div>
+          <div className="absolute top-2 right-2">
+            <button className="cursor-pointer" onClick={handleClick}>
+              <IoClose size={30} />
+            </button>
+          </div>
+        </div>
+      </form>
     </>
   );
 }
