@@ -18,7 +18,7 @@ function AddItem({ setToggleItem }: AddItemPros) {
   const queryClient = useQueryClient();
   const mutation = useMutation(postItem, {
     onSuccess: () => {
-      queryClient.invalidateQueries("fetchInventoryItem");
+      queryClient.invalidateQueries("Items");
     },
     onError: (error) => {
       console.error("Error creating supplier:", error);
