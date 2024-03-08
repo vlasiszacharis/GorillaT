@@ -56,7 +56,7 @@ function SuppliersMenu() {
             <div className="flex flex-row gap-2 p-4 item-center justify-center">
               <div onClick={handleAddSupplier}>
                 <Button
-                  message={"Add Supplier"}
+                  message={"Supplier"}
                   bgColor={"bg-blue-600"}
                   hoverBgColor={"hover:bg-custom-navy"}
                   textColor={"white"}
