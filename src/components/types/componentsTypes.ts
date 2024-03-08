@@ -7,3 +7,7 @@ export interface ButtonProps {
   textColor: string;
   icon?: ReactNode;
 }
+
+export interface PopMessageProps {
+  message: string;
+}

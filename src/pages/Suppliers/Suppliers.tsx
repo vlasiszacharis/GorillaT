@@ -12,7 +12,6 @@ import { GridColDef } from "@mui/x-data-grid";
 import { getSuppliers, deleteSupplier } from "../../utils/api/apiClient";
 import { Supplier } from "../../types/apiClientTypes";
 import SuppliersMenu from "./SuppliersMenu";
-import PopMessage from "../../components/PopMessage";
 
 function SuppliersExcel() {
   const queryClient = useQueryClient();
@@ -149,7 +148,6 @@ function SuppliersExcel() {
   return (
     <>
       <SuppliersMenu />
-      <PopMessage />
 
       <div
         style={{

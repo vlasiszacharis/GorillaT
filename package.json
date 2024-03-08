@@ -15,6 +15,7 @@
     "@types/react": "^18.2.59",
     "@types/react-dom": "^18.2.19",
     "axios": "^1.6.7",
+    "formik": "^2.4.5",
     "framer-motion": "^11.0.6",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -24,7 +25,8 @@
     "react-router-dom": "^6.22.1",
     "react-scripts": "^5.0.1",
     "react-tooltip": "^5.26.3",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "yup": "^1.4.0"
   },
   "scripts": {
     "start": "react-scripts start",
