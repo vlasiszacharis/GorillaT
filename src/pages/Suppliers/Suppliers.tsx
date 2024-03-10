@@ -4,7 +4,7 @@ import { MdDelete } from "react-icons/md";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { useState } from "react";
-// import EditSupplier from "./EditSupplier";
+import EditSupplier from "./EditSupplier";
 import Modal from "../../components/Modal";
 import { DataGrid } from "@mui/x-data-grid";
 
@@ -24,7 +24,10 @@ function SuppliersExcel() {
       console.error("Error deleting supplier:", error);
     },
   });
-
+  const [editName, setEditName] = useState("");
+  const [editAfm, setEditAfm] = useState("");
+  const [editEmail, setEditEmail] = useState("");
+  const [editWeb, setWeb] = useState("");
   const [toggleEdit, setToggleEdit] = useState(false);
 
   // Get Suppliers
@@ -46,8 +49,17 @@ function SuppliersExcel() {
       </>
     );
   }
-  const handleEdit = () => {
+  const handleEdit = (
+    supplier_name: string,
+    supplier_email: string,
+    supplier_afm: string,
+    supplier_webpage: string
+  ) => {
     setToggleEdit(!toggleEdit);
+    setEditName(supplier_name);
+    setEditAfm(supplier_afm);
+    setEditEmail(supplier_email);
+    setWeb(supplier_webpage);
   };
 
   const handleDelete = (
@@ -107,11 +119,25 @@ function SuppliersExcel() {
       minWidth: 160,
       headerAlign: "center",
       align: "center",
-      renderCell: (params: { row: { id: number; supplier_afm: any } }) => (
+      renderCell: (params: {
+        row: {
+          supplier_name: string;
+          supplier_afm: any;
+          supplier_email: string;
+          supplier_webpage: string;
+        };
+      }) => (
         <>
           <div className="flex flex-row gap-4">
             <button
-              onClick={(event) => handleEdit()}
+              onClick={() =>
+                handleEdit(
+                  params.row.supplier_name,
+                  params.row.supplier_email,
+                  params.row.supplier_afm,
+                  params.row.supplier_webpage
+                )
+              }
               className="bg-blue-500 p-3 hover:bg-blue-600 rounded-md"
             >
               <CiEdit />
@@ -187,13 +213,15 @@ function SuppliersExcel() {
           }}
         />
       </div>
-      {/* {toggleEdit && (
+      {toggleEdit && (
         <EditSupplier
           setToggleEdit={setToggleEdit}
-          supplierName={""}
-          supplierCode={""}
+          supplier_name={editName}
+          supplier_afm={editAfm}
+          supplier_email={editEmail}
+          supplier_webpage={editWeb}
         />
-      )} */}
+      )}
       {toggleEdit && <Modal />}
     </>
   );

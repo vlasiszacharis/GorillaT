@@ -19,6 +19,10 @@ module.exports = {
         10: "2.5rem",
         14: "3.5rem",
       },
+      screens: {
+        "2xl": "1526px",
+        "3xl": "1920px",
+      },
     },
   },
   plugins: [],

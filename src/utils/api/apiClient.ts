@@ -21,6 +21,21 @@ export const deleteSupplier = async (supplier_afm: number) => {
   return response.data;
 };
 
+export const editSupplier = async (editedSupplier: any) => {
+  const response = await axios.put(
+    `${BASE_URL}/api/v1/suppliers`,
+    editedSupplier
+  );
+  return response.data;
+};
+
+export const postSuppliers = async (newSupplier: any) => {
+  const { data } = await axios.post(
+    `${BASE_URL}/api/v1/suppliers`,
+    newSupplier
+  );
+  return data;
+};
 //Stock Items , "StockItem"
 export const getStockItems = async (): Promise<StockItem[]> => {
   const response = await axios.get<StockItem[]>(
@@ -31,8 +46,8 @@ export const getStockItems = async (): Promise<StockItem[]> => {
 
 export const postStockItems = async (
   stockItem: StockItem
-): Promise<StockItem[]> => {
-  const response = await axios.post<StockItem[]>(
+): Promise<StockItem> => {
+  const response = await axios.post<StockItem>(
     `${BASE_URL}/api/v1/stock/items`,
     stockItem
   );

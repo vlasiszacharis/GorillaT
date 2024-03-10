@@ -1,11 +1,10 @@
 import React, { useState } from "react";
 import { IoClose } from "react-icons/io5";
-import axios from "axios";
 import { useMutation, useQueryClient } from "react-query";
-import { BASE_URL } from "../../utils/config/BaseUrl";
 import PopMessage from "../../components/PopMessage";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { postSuppliers } from "../../utils/api/apiClient";
 interface AddSupplierProps {
   setToggleSupplier: Function;
 }
@@ -18,13 +17,7 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
   const handlePopMessage = () => {
     setSuccessMessage(true);
   };
-  const postSuppliers = async (newSupplier: any) => {
-    const { data } = await axios.post(
-      `${BASE_URL}/api/v1/suppliers`,
-      newSupplier
-    );
-    return data;
-  };
+
   const queryClient = useQueryClient();
   const mutation = useMutation(postSuppliers, {
     onSuccess: () => {
@@ -124,11 +117,6 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
                 name="supplier_webpage"
                 className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
                 placeholder="Add Address"
-              />
-              <ErrorMessage
-                name="supplier_webpage"
-                component="div"
-                className="text-red-600"
               />
             </div>
 

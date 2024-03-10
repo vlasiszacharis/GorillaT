@@ -19,6 +19,12 @@ function Stock() {
   const [toggleItem, setToggleItem] = useState(false);
 
   const [toggleEdit, setToggleEdit] = useState(false);
+  const [supplierName, setSupplierName] = useState("");
+  const [supplierCode, setSupplierCode] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [unit, setUnit] = useState("");
+  const [category, setCategory] = useState("");
+  const [quantity, setQuantity] = useState("");
 
   const queryClient = useQueryClient();
   // Delete Stock Item
@@ -31,8 +37,21 @@ function Stock() {
     },
   });
 
-  const handleEdit = () => {
+  const handleEdit = (
+    item_supplier_name: string,
+    item_supplier_code: string,
+    item_name: string,
+    item_measurement_unit: string,
+    item_category: string,
+    item_quantity: any
+  ) => {
     setToggleEdit(!toggleEdit);
+    setSupplierName(item_supplier_name);
+    setSupplierCode(item_supplier_code);
+    setItemName(item_name);
+    setUnit(item_measurement_unit);
+    setCategory(item_category);
+    setQuantity(item_quantity);
   };
   const handleDelete = (params: any) => {
     const itemData = {
@@ -109,10 +128,28 @@ function Stock() {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: (params: { row: { id: number; supplier_afm: any } }) => (
+      renderCell: (params: {
+        row: {
+          item_supplier_name: string;
+          item_supplier_code: string;
+          item_name: string;
+          item_measurement_unit: string;
+          item_category: string;
+          item_quantity: any;
+        };
+      }) => (
         <div className="flex flex-row gap-4">
           <button
-            onClick={() => handleEdit()}
+            onClick={() =>
+              handleEdit(
+                params.row.item_supplier_name,
+                params.row.item_supplier_code,
+                params.row.item_name,
+                params.row.item_measurement_unit,
+                params.row.item_category,
+                params.row.item_quantity
+              )
+            }
             className="bg-blue-500 p-3 hover:bg-blue-600 rounded-md"
           >
             <CiEdit />
@@ -183,10 +220,15 @@ function Stock() {
           {toggleEdit && (
             <EditStockItem
               setToggleEdit={setToggleEdit}
-              supplierName={""}
-              supplierCode={""}
+              item_supplier_name={supplierName}
+              item_supplier_code={supplierCode}
+              item_name={itemName}
+              item_measurement_unit={unit}
+              item_category={category}
+              item_quantity={quantity}
             />
           )}
+          {toggleEdit && <Modal />}
         </div>
       )}
       {!isActive && <SubRecipesStock />}

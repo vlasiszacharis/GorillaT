@@ -31,6 +31,9 @@ export interface AddStockItemProps {
   setToggleItem: Function;
 }
 
+export interface EditStockItemProps extends StockItem {
+  setToggleEdit: Function;
+}
 export interface SimpleIngredientModel {
   quantity: number;
   food_cost: number;
