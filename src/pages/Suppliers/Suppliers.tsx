@@ -116,7 +116,7 @@ function SuppliersExcel() {
       headerName: "Actions",
       sortable: false,
       flex: 1,
-      minWidth: 160,
+      minWidth: 120,
       headerAlign: "center",
       align: "center",
       renderCell: (params: {
@@ -175,13 +175,7 @@ function SuppliersExcel() {
     <>
       <SuppliersMenu />
 
-      <div
-        style={{
-          height: 660,
-          width: "96%",
-          paddingLeft: "40px",
-        }}
-      >
+      <div className="bg-white justify-center items-center flex ml-7 h-[540px] w-[95%]  3xl:h-[755px]">
         <DataGrid
           rows={rows}
           columns={columns}
@@ -193,7 +187,7 @@ function SuppliersExcel() {
               fontSize: "18px",
             },
             "& .MuiDataGrid-columnHeader": {
-              borderRight: "1px solid #ccc", // Adding right border to column headers for separation
+              borderRight: "1px solid #ccc",
             },
             "& .MuiDataGrid-cell": {
               fontFamily: "Manrope, sans-serif",
@@ -213,6 +207,7 @@ function SuppliersExcel() {
           }}
         />
       </div>
+
       {toggleEdit && (
         <EditSupplier
           setToggleEdit={setToggleEdit}

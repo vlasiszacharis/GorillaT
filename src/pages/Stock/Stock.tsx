@@ -175,14 +175,7 @@ function Stock() {
     <>
       <StockMenu isActive={isActive} setIsActive={setIsActive} />
       {isActive && (
-        <div
-          style={{
-            height: 600,
-            width: "96%",
-            paddingLeft: "40px",
-            fontFamily: "manrope",
-          }}
-        >
+        <div className="bg-white ml-8 h-[545px] w-[95%]  font-manrope 3xl:h-[760px]">
           <DataGrid
             rows={rows}
             columns={columns}

@@ -19,7 +19,7 @@ function StockMenu({ isActive, setIsActive }: StockMenuPros) {
   return (
     <>
       {" "}
-      <div className=" p-4 pr-12 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold bg-slate-100">
+      <div className=" p-4 pr-12 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold ">
         <div className="flex flex-row justify-end gap-8 ">
           <div className="flex justify-center items-center  p-3 py-7 gap-8 bg-white rounded-xl shadow-md min-w-72 max-h-40">
             <div className="flex flex-col justify-center items-center gap-4">

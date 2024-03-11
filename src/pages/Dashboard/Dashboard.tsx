@@ -2,17 +2,86 @@ import React from "react";
 import { MdMapsHomeWork } from "react-icons/md";
 import { TbCoins } from "react-icons/tb";
 import { FaBook } from "react-icons/fa";
-
+import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from "victory";
+import { VictoryPie } from "victory";
 function Dashboard() {
+  const data = [
+    { supplier: 1, value: 5000 },
+    { supplier: 2, value: 3000 },
+    { supplier: 3, value: 6000 },
+    { supplier: 4, value: 2500 },
+    { supplier: 5, value: 4500 },
+  ];
+  const data1 = [
+    { category: "Meats", amount: 35 },
+    { category: "Vegetables", amount: 25 },
+    { category: "Spices", amount: 15 },
+    { category: "Dairy", amount: 10 },
+    { category: "Beverages", amount: 15 },
+  ];
   return (
     <>
-      <div className="flex flex-col h-screen bg-slate-100">
+      <div className="flex flex-col h-screen ">
         <div className="flex flex-row justify-between items-center p-6 pr-16 font-manrope font-bold text-xl">
           <h2 className="text-3xl font-bold">Botrini's</h2>
         </div>
 
         <div className="grid p-2 gap-8 mr-6 ml-6 grid-cols-3 items-start justify-center flex-grow">
           <div className="col-span-2 flex flex-col justify-start items-center gap-8">
+            <div className="flex flex-row gap-8">
+              {" "}
+              <div className="p-1  py-4 w-1/2 bg-white rounded-3xl shadow-md flex flex-col items-center justify-center text-lg font-semibold">
+                <h2>Value per Supplier</h2>
+                <VictoryChart
+                  theme={VictoryTheme.material}
+                  domainPadding={60}
+                  height={350}
+                  width={550}
+                >
+                  <VictoryAxis
+                    tickValues={[1, 2, 3, 4, 5]}
+                    tickFormat={[
+                      "Supplier 1",
+                      "Supplier 2",
+                      "Supplier 3",
+                      "Supplier 4",
+                      "Supplier 5",
+                    ]}
+                    style={{
+                      tickLabels: { fontSize: 15, padding: 5 },
+                    }}
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    tickFormat={(x) => `$${x}`}
+                    style={{
+                      tickLabels: { fontSize: 15, padding: 5 },
+                    }}
+                  />
+                  <VictoryBar
+                    data={data}
+                    x="supplier"
+                    y="value"
+                    barWidth={50}
+                    style={{ data: { fill: "#2f53da" } }}
+                  />
+                </VictoryChart>
+              </div>{" "}
+              <div className="p-1  py-4 w-1/2 bg-white rounded-3xl shadow-md flex flex-col items-center justify-center text-lg font-semibold">
+                <h2>Kitchen Stock Categories</h2>
+                <VictoryPie
+                  data={data1}
+                  x="category"
+                  y="amount"
+                  height={350}
+                  width={550}
+                  colorScale={["tomato", "orange", "gold", "cyan", "navy"]}
+                  style={{
+                    labels: { fontSize: 14, fill: "white" },
+                  }}
+                />
+              </div>
+            </div>
             <div className="w-full p-8 py-12 bg-white rounded-2xl shadow-md flex flex-col items-center justify-center text-lg font-semibold">
               <div className="flex flex-col gap-2 p-2">
                 <h3>Fast Actions</h3>
@@ -24,35 +93,6 @@ function Dashboard() {
                   <button>Low stock</button>
                 </div>
               </div>
-            </div>
-            <div className="flex flex-row w-full justify-around gap-8 items-center">
-              <div className="w-1/2 p-14 py-16 bg-white rounded-2xl shadow-md flex flex-row gap-2 items-center justify-start">
-                <div className="flex flex-col gap-2 ">
-                  <div className="flex flex-row items-center justify-center gap-2">
-                    {" "}
-                    <div className="w-4 h-4 bg-custom-navy rounded"></div>
-                    <div className="text-xl font-semibold">
-                      Total Stock Value
-                    </div>
-                  </div>
-                  <div className="font-bold text-2xl">1254 $</div>
-                </div>
-              </div>
-              <div className="w-1/2 p-14 py-16 bg-white rounded-2xl shadow-md flex flex-row gap-2 items-center justify-start">
-                <div className="flex flex-col gap-2 ">
-                  <div className="flex flex-row items-center justify-center gap-2">
-                    {" "}
-                    <div className="w-4 h-4 bg-custom-navy rounded"></div>
-                    <div className="text-xl font-semibold">
-                      Total Stock Value
-                    </div>
-                  </div>
-                  <div className="font-bold text-2xl">1254 $</div>
-                </div>
-              </div>
-            </div>
-            <div className="w-full p-12 py-18 bg-white rounded-3xl shadow-md flex flex-col items-center justify-center text-lg font-semibold">
-              Value Per Supplier
             </div>
           </div>
           <div className="flex flex-col pt-8 gap-6 rounded-3xl">

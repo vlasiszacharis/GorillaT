@@ -131,7 +131,7 @@ function Inventory() {
 
   return (
     <>
-      <div className=" p-4 pr-20  font-manrope text-l text-black text-opacity-70  font-semibold bg-slate-100">
+      <div className=" p-4 pr-20  font-manrope text-l text-black text-opacity-70  font-semibold ">
         <div className="flex flex-row justify-end  ">
           <div className="flex flex-row "></div>
           <div className="flex flex-row">
@@ -181,10 +181,7 @@ function Inventory() {
 
       {toggleEdit && <Modal />}
 
-      <div
-        className="pl-1"
-        style={{ height: 650, width: "96%", paddingLeft: "40px" }}
-      >
+      <div className="h-[647px] w-[95%] bg-white ml-8 font-manrope 3xl:h-[862px]">
         <DataGrid
           rows={rows}
           columns={columns}

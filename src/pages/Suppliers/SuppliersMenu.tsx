@@ -14,11 +14,11 @@ function SuppliersMenu() {
   };
   return (
     <>
-      <div className=" p-2 py-2 pr-16 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold bg-slate-100">
+      <div className=" p-2 py-2 pr-16 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold ">
         <div className="flex flex-row justify-between  gap-4 pr-8">
-          <div className="flex flex-row gap-4 p-2">
+          <div className="flex flex-row gap-4 p-2 ">
             {" "}
-            <div className="flex p-5 py-9  bg-white rounded-xl shadow-md min-w-52">
+            <div className="flex p-5 py-9  bg-white rounded-xl shadow-md min-w-52 ">
               <div className="flex flex-col gap-4">
                 <h4 className="font-semibold text-xl">Total Suppliers</h4>
                 <div className="flex flex-row items-center gap-3">
@@ -52,7 +52,7 @@ function SuppliersMenu() {
               </div>
             </div>
           </div>
-          <div className="  p-4 item-center justify-center gap-2 font-manrope text-l font-semibold bg-slate-100">
+          <div className="  p-4 item-center justify-center gap-2 font-manrope text-l font-semibold ">
             <div className="flex flex-row gap-2 p-4 item-center justify-center">
               <div onClick={handleAddSupplier}>
                 <Button

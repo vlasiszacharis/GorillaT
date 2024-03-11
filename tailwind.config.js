@@ -14,6 +14,9 @@ module.exports = {
       colors: {
         "custom-navy": "#2f53da",
       },
+      backgroundColor: {
+        "slate-150": "#ebeff2",
+      },
       padding: {
         18: "4.5rem",
         10: "2.5rem",

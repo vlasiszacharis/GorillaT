@@ -4,6 +4,9 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { ChangeEvent } from "react";
+import { FaRegLemon } from "react-icons/fa";
+import { IoBookSharp } from "react-icons/io5";
+
 import useCalculatePricePerUnit from "../../hooks/useCalculatePricePerUnit";
 import useSubRecipeCalculate from "../../hooks/useSubRecipeCalculate";
 import {
@@ -15,7 +18,7 @@ import {
   PricedSubRecipeModelID,
   PricedSubRecipeModel,
   PricedSubRecipePost,
-} from "../../types/apiClientTypes";
+} from "./newSubTypes";
 import {
   Ingredient,
   IngredientID,
@@ -197,194 +200,236 @@ function NewSub() {
 
   return (
     <>
-      <form onSubmit={handleForm}>
-        <div
-          id="inventory_titles"
-          className="flex flex-row justify-start pt-4 gap-2 items-center border-2 border-slate-100 bg-slate-50 font-semibold p-2 font-manrope text-lg mr-1    pl-10"
-        >
-          {" "}
-          <h2 className="font-manrope pl-8  font-semibold justify-start items-center">
-            Create New Sub-Recipe
-          </h2>
-        </div>
-
-        {/* Name */}
-        <div className="bg-slate-100 p-4 gap-3 rounded-lg mt-2 border-2 border-slate-100 shadow-sm">
-          <h3 className="text-lg font-semibold mb-4 text-gray-800">
-            Add New Recipe
-          </h3>
-          <div className="grid grid-cols-3 gap-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="recipeName" className="font-medium text-gray-700">
-                Name
-              </label>
-              <input
-                id="recipeName"
-                name="priced_sub_recipe_title"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Name"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="recipeDescription"
-                className="font-medium text-gray-700"
-              >
-                Description
-              </label>
-              <input
-                id="recipeDescription"
-                name="priced_sub_recipe_description"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Description"
-              />
-            </div>
-            <div className="flex flex-col gap-2">
-              <label
-                htmlFor="recipeCategory"
-                className="font-medium text-gray-700"
-              >
-                Category
-              </label>
-              <input
-                id="recipeCategory"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Category"
-              />
+      <div className=" h-full w-full">
+        <form onSubmit={handleForm}>
+          <div className=" px-4">
+            <div
+              id="inventory_titles"
+              className="flex flex-row justify-center p-4 rounded-bl-lg rounded-br-lg  items-center  bg-white font-semibold  font-manrope text-lg mr-1    pl-10"
+            >
+              {" "}
+              <h2 className="font-manrope pl-8 text-2xl font-semibold justify-center items-center">
+                Create New Sub-Recipe
+              </h2>
             </div>
           </div>
-          <button
-            type="submit"
-            className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-          >
-            Add Recipe
-          </button>
-        </div>
-        {/* Ingredients */}
-        <div className="flex flex-col justify-start pt-4 items-start mt-2 border-2 border-slate-100 gap-2 bg-slate-50 font-semibold p-12 font-manrope text-base mr-1  pl-10">
-          <h3 className="text-base font-semibold">Ingredients</h3>
-          <div className="flex flex-col">
-            <input
-              value={searchTerm}
-              onChange={handleChange}
-              onFocus={handleIngredientFocus}
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700 mt-2"
-              placeholder="Search and add an ingredient"
-            />
-            {ingredientsMenu && (
-              <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-full">
-                {visibleIngredients.map((item: Ingredient) => (
-                  <div
-                    key={item.item_supplier_code}
-                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleItemClick(item)}
-                  >
-                    {item.item_name} - {item.item_supplier_name}
-                  </div>
-                ))}
-              </div>
-            )}
-            {selectedIngredients.map((ingredient) => (
-              <div
-                key={ingredient.id}
-                className="flex items-center justify-between gap-2 p-2 text-sm"
-              >
-                <input
-                  className="pl-2 border border-gray-300 rounded-md flex-grow"
-                  value={`${ingredient.item_name} - ${ingredient.item_supplier_name}`}
-                  readOnly
-                />
-                <input
-                  id={`quantity-${ingredient.id}`}
-                  type="number"
-                  min="1"
-                  className="w-20 pl-2 py-1  border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-                  placeholder="Quantity"
-                  onChange={(e) => handleQuantityChange(ingredient.id, e)}
-                />
 
-                <div>
-                  {(
-                    ingredient.item_quantity * ingredient.item_pricePerUnit
-                  ).toFixed(3)}
-                  $
+          {/* Name */}
+          <div className=" px-4">
+            {" "}
+            <div className="bg-white p-8  rounded-lg mt-2  shadow-sm">
+              <h3 className="text-xl pl-4  font-semibold mb-4 text-gray-800">
+                Details
+              </h3>
+              <div className="grid grid-cols-3 gap-2">
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="recipeName"
+                    className="font-medium text-gray-700"
+                  >
+                    Name
+                  </label>
+                  <input
+                    id="recipeName"
+                    name="priced_sub_recipe_title"
+                    type="text"
+                    className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Name"
+                  />
                 </div>
-                <button
-                  onClick={() => handleDelete(ingredient.id)}
-                  className="bg-red-500 text-white p-1 rounded hover:bg-red-700"
-                >
-                  Delete
-                </button>
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="recipeDescription"
+                    className="font-medium text-gray-700"
+                  >
+                    Description
+                  </label>
+                  <input
+                    id="recipeDescription"
+                    name="priced_sub_recipe_description"
+                    type="text"
+                    className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Description"
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label
+                    htmlFor="recipeCategory"
+                    className="font-medium text-gray-700"
+                  >
+                    Category
+                  </label>
+                  <input
+                    id="recipeCategory"
+                    type="text"
+                    className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="Category"
+                  />
+                </div>
               </div>
-            ))}
+              <button
+                type="submit"
+                className="mt-4 px-4 py-2 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+              >
+                Add Recipe
+              </button>
+            </div>
           </div>
-        </div>
-        {/* SubRecipes */}
-        <div className="flex flex-col justify-start pt-4 items-start mt-2 border-2 border-slate-100 bg-slate-50 font-semibold p-12 font-manrope text-md mr-1  pl-10 gap-1">
-          <h3 className=" font-semibold text-lg">Sub Recipes</h3>
 
-          <div className="flex flex-col ">
-            {selectedSub.map((subrecipe) => (
-              <div
-                key={subrecipe.id}
-                className="flex items-center gap-2 p-2 text-sm"
-              >
-                <input
-                  className=" border border-gray-300 rounded-md flex-1"
-                  value={`${subrecipe.priced_sub_recipe_title} - ${subrecipe.priced_sub_recipe_description}`}
-                  readOnly
-                />
-                <input
-                  type="number"
-                  min="1"
-                  onChange={(e) => handleSubQuantityChange(subrecipe.id, e)}
-                  className="w-20 pl-2 py-1 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-                  placeholder="Quantity"
-                />
-                <div>
-                  {(
-                    subrecipe.priced_sub_recipe_quantity *
-                    subrecipe.priced_sub_recipe_pricePerUnit
-                  ).toFixed(2)}
-                  $
-                </div>
-                <button
-                  onClick={() => handleDeleteSub(subrecipe.id)}
-                  className="bg-red-500 text-white p-1 rounded hover:bg-red-700"
-                >
-                  Delete
-                </button>
-              </div>
-            ))}
-            <input
-              value={searchSub}
-              onChange={handleSub}
-              onFocus={() => setShowSub(true)}
-              className="pl-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-              placeholder="Search and add a sub-recipe"
-            ></input>
-            {showSub && (
-              <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-80">
-                {visibleSubRecipes.map((subrecipe: PricedSubRecipeModel) => (
-                  <div
-                    key={subrecipe.priced_sub_recipe_id}
-                    className="p-2 hover:bg-gray-100 cursor-pointer"
-                    onClick={() => handleSubClick(subrecipe)}
-                  >
-                    <span>
-                      {subrecipe.priced_sub_recipe_title} -{" "}
-                      {subrecipe.priced_sub_recipe_description}
+          {/* Ingredients */}
+          <div className="px-4">
+            <div className="flex flex-row rounded-lg gap-2    w-full">
+              {" "}
+              <div className="flex flex-col justify-start pt-4 py-28 items-start mt-2 gap-2 rounded-lg bg-white font-semibold p-12 font-manrope text-base w-1/2">
+                <h3 className=" justify-center items-center text-xl font-semibold">
+                  Ingredients
+                </h3>
+                <div className="flex flex-row gap-2 justify-start items-start">
+                  {" "}
+                  <div className="bg-blue-100 w-8 h-8 rounded-md flex justify-center items-center">
+                    <span className=" flex flex-row justify-center items-center">
+                      <FaRegLemon color="blue" size={14} />
                     </span>
                   </div>
-                ))}
+                  <div className="flex flex-col ">
+                    <input
+                      value={searchTerm}
+                      onChange={handleChange}
+                      onFocus={handleIngredientFocus}
+                      className="pl-2 py-1 border  border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700 "
+                      placeholder="Search and add an ingredient"
+                    />
+                    {ingredientsMenu && (
+                      <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-full">
+                        {visibleIngredients.map((item: Ingredient) => (
+                          <div
+                            key={item.item_supplier_code}
+                            className="p-2 hover:bg-gray-100 cursor-pointer"
+                            onClick={() => handleItemClick(item)}
+                          >
+                            {item.item_name} - {item.item_supplier_name}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    {selectedIngredients.map((ingredient) => (
+                      <div
+                        key={ingredient.id}
+                        className="flex items-center justify-between gap-5 py-1 text-sm"
+                      >
+                        <input
+                          className="pl-2 py-2 w-full border border-gray-300 rounded-md flex-grow"
+                          value={`${ingredient.item_name} - ${ingredient.item_supplier_name}`}
+                          readOnly
+                        />
+                        <input
+                          id={`quantity-${ingredient.id}`}
+                          type="number"
+                          min="1"
+                          className="w-20 pl-2 py-2  border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+                          placeholder="Quantity"
+                          onChange={(e) =>
+                            handleQuantityChange(ingredient.id, e)
+                          }
+                        />
+
+                        <div>
+                          {(
+                            ingredient.item_quantity *
+                            ingredient.item_pricePerUnit
+                          ).toFixed(3)}
+                          $
+                        </div>
+                        <button
+                          onClick={() => handleDelete(ingredient.id)}
+                          className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
-            )}
+              {/* SubRecipes */}
+              <div className="flex flex-col justify-start pt-6 items-start mt-2 bg-white rounded-lg font-semibold p-12 font-manrope text-md gap-1  w-1/2">
+                <h2 className=" justify-center items-center text-xl font-semibold">
+                  Sub Recipes
+                </h2>
+
+                <div className="flex flex-row gap-2 justify-start items-start">
+                  <div className="bg-blue-100 w-8 h-8 rounded-md flex justify-center items-center">
+                    <span className=" flex flex-row justify-center items-center">
+                      <IoBookSharp color="blue" size={14} />
+                    </span>
+                  </div>
+                  <div className="flex flex-col ">
+                    {selectedSub.map((subrecipe) => (
+                      <div
+                        key={subrecipe.id}
+                        className="flex items-center gap-2 p-2 text-sm"
+                      >
+                        <input
+                          className=" border border-gray-300 py-2 rounded-md flex-1"
+                          value={`${subrecipe.priced_sub_recipe_title} - ${subrecipe.priced_sub_recipe_description}`}
+                          readOnly
+                        />
+                        <input
+                          type="number"
+                          min="1"
+                          onChange={(e) =>
+                            handleSubQuantityChange(subrecipe.id, e)
+                          }
+                          className="w-20 pl-2 py-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+                          placeholder="Quantity"
+                        />
+                        <div>
+                          {(
+                            subrecipe.priced_sub_recipe_quantity *
+                            subrecipe.priced_sub_recipe_pricePerUnit
+                          ).toFixed(2)}
+                          $
+                        </div>
+                        <button
+                          onClick={() => handleDeleteSub(subrecipe.id)}
+                          className="bg-red-500 text-white p-1 rounded hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
+                    <input
+                      value={searchSub}
+                      onChange={handleSub}
+                      onFocus={() => setShowSub(true)}
+                      className="pl-2 py-1 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+                      placeholder="Search and add a sub-recipe"
+                    ></input>
+                    {showSub && (
+                      <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-80">
+                        {visibleSubRecipes.map(
+                          (subrecipe: PricedSubRecipeModel) => (
+                            <div
+                              key={subrecipe.priced_sub_recipe_id}
+                              className="p-2 hover:bg-gray-100 cursor-pointer"
+                              onClick={() => handleSubClick(subrecipe)}
+                            >
+                              <span>
+                                {subrecipe.priced_sub_recipe_title} -{" "}
+                                {subrecipe.priced_sub_recipe_description}
+                              </span>
+                            </div>
+                          )
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </>
   );
 }

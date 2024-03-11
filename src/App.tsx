@@ -35,16 +35,16 @@ function App() {
   };
   return (
     <>
-      <div className="min-h-screen flex">
+      <div className="min-h-screen flex bg-slate-150">
         <aside
-          className={`fixed  pt-5 rounded-r-3xl  bg-custom-navy ${
+          className={`fixed  pt-5 rounded-r-3xl  bg-custom-navy  ${
             isCollapsed ? "w-[5%]" : "w-1/6"
           } p-3 text-white text-opacity-80 transition-all duration-300 h-screen flex flex-col justify-between `}
         >
           {!isCollapsed && (
             <button
               onClick={toggleSidebar}
-              className="absolute top-1/2 left-56 transform -translate-y-1/2 cursor-pointer opacity-80 text-white  hover:opacity-100"
+              className="absolute top-1/2 left-56 3xl:left-72 transform -translate-y-1/2 cursor-pointer opacity-80 text-white  hover:opacity-100"
             >
               <MdOutlineKeyboardArrowLeft size={38} />
             </button>
@@ -68,7 +68,7 @@ function App() {
               </h1>
             )}
           </div>
-          <div className="flex flex-col gap-3 pb-14 ">
+          <div className="flex flex-col gap-3 pb-14 3xl:pb-52">
             <NavLink
               data-tooltip-id="overview"
               data-tooltip-content="Overview"
