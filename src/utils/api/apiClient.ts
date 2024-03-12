@@ -6,7 +6,10 @@ import {
   DeleteStockItemProps,
   Supplier,
 } from "../../types/apiClientTypes";
-import { Ingredient } from "../../pages/Inventory/inventoryTypes";
+import {
+  DeleteItemProps,
+  Ingredient,
+} from "../../pages/Inventory/inventoryTypes";
 //Suppliers , "Suppliers"
 
 export const getSuppliers = async (): Promise<Supplier[]> => {
@@ -85,6 +88,15 @@ export const postItem = async (addItem: any): Promise<Ingredient> => {
 
 export const putItem = async (editItem: any): Promise<Ingredient> => {
   const response = await axios.put(`${BASE_URL}/api/v1/items`, editItem);
+  return response.data;
+};
+export const deleteItem = async ({
+  item_supplier_name,
+  item_supplier_code,
+}: DeleteItemProps) => {
+  const response = await axios.delete(
+    `${BASE_URL}/api/v1/items/${item_supplier_name}/${item_supplier_code}`
+  );
   return response.data;
 };
 //Sub-Recipes  , "SubRecipes"

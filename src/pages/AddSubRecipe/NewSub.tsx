@@ -82,9 +82,22 @@ function NewSub() {
   const handleIngredientFocus = () => {
     if (!ingredientsMenu) {
       setIngredientsMenu(true);
+    } else {
+      setTimeout(() => {
+        setIngredientsMenu(false);
+      }, 200);
     }
   };
 
+  const handleSubFocus = () => {
+    if (!showSub) {
+      setShowSub(true);
+    } else {
+      setTimeout(() => {
+        setShowSub(false);
+      }, 200);
+    }
+  };
   const handleItemClick = (item: Ingredient) => {
     const newItem: IngredientID = {
       ...item,
@@ -200,12 +213,12 @@ function NewSub() {
 
   return (
     <>
-      <div className=" h-full w-full">
+      <div className=" ">
         <form onSubmit={handleForm}>
-          <div className=" px-4">
+          <div className=" px-1">
             <div
               id="inventory_titles"
-              className="flex flex-row justify-center p-4 rounded-bl-lg rounded-br-lg  items-center  bg-white font-semibold  font-manrope text-lg mr-1    pl-10"
+              className="flex flex-row justify-center p-4 rounded-lg  items-center  bg-white font-semibold  font-manrope text-lg mr-1 mt-2 pl-10"
             >
               {" "}
               <h2 className="font-manrope pl-8 text-2xl font-semibold justify-center items-center">
@@ -215,7 +228,7 @@ function NewSub() {
           </div>
 
           {/* Name */}
-          <div className=" px-4">
+          <div className=" px-1 pr-2">
             {" "}
             <div className="bg-white p-8  rounded-lg mt-2  shadow-sm">
               <h3 className="text-xl pl-4  font-semibold mb-4 text-gray-800">
@@ -277,10 +290,10 @@ function NewSub() {
           </div>
 
           {/* Ingredients */}
-          <div className="px-4">
-            <div className="flex flex-row rounded-lg gap-2    w-full">
+          <div className="px-1 pr-2">
+            <div className="flex flex-row rounded-lg gap-2  w-full">
               {" "}
-              <div className="flex flex-col justify-start pt-4 py-28 items-start mt-2 gap-2 rounded-lg bg-white font-semibold p-12 font-manrope text-base w-1/2">
+              <div className="flex flex-col justify-start pt-4 py-36 items-start mt-2 gap-2 rounded-lg bg-white font-semibold p-12 font-manrope text-base w-1/2">
                 <h3 className=" justify-center items-center text-xl font-semibold">
                   Ingredients
                 </h3>
@@ -296,8 +309,9 @@ function NewSub() {
                       value={searchTerm}
                       onChange={handleChange}
                       onFocus={handleIngredientFocus}
+                      onBlur={handleIngredientFocus}
                       className="pl-2 py-1 border  border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700 "
-                      placeholder="Search and add an ingredient"
+                      placeholder="Search an ingredient"
                     />
                     {ingredientsMenu && (
                       <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-full">
@@ -326,7 +340,7 @@ function NewSub() {
                           id={`quantity-${ingredient.id}`}
                           type="number"
                           min="1"
-                          className="w-20 pl-2 py-2  border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+                          className="w-20 pl-1 py-2  border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
                           placeholder="Quantity"
                           onChange={(e) =>
                             handleQuantityChange(ingredient.id, e)
@@ -337,7 +351,7 @@ function NewSub() {
                           {(
                             ingredient.item_quantity *
                             ingredient.item_pricePerUnit
-                          ).toFixed(3)}
+                          ).toFixed(2)}
                           $
                         </div>
                         <button
@@ -352,7 +366,7 @@ function NewSub() {
                 </div>
               </div>
               {/* SubRecipes */}
-              <div className="flex flex-col justify-start pt-6 items-start mt-2 bg-white rounded-lg font-semibold p-12 font-manrope text-md gap-1  w-1/2">
+              <div className="flex flex-col  justify-start pt-4 items-start mt-2 bg-white rounded-lg font-semibold p-12 font-manrope text-md gap-1  w-1/2">
                 <h2 className=" justify-center items-center text-xl font-semibold">
                   Sub Recipes
                 </h2>
@@ -364,46 +378,13 @@ function NewSub() {
                     </span>
                   </div>
                   <div className="flex flex-col ">
-                    {selectedSub.map((subrecipe) => (
-                      <div
-                        key={subrecipe.id}
-                        className="flex items-center gap-2 p-2 text-sm"
-                      >
-                        <input
-                          className=" border border-gray-300 py-2 rounded-md flex-1"
-                          value={`${subrecipe.priced_sub_recipe_title} - ${subrecipe.priced_sub_recipe_description}`}
-                          readOnly
-                        />
-                        <input
-                          type="number"
-                          min="1"
-                          onChange={(e) =>
-                            handleSubQuantityChange(subrecipe.id, e)
-                          }
-                          className="w-20 pl-2 py-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-                          placeholder="Quantity"
-                        />
-                        <div>
-                          {(
-                            subrecipe.priced_sub_recipe_quantity *
-                            subrecipe.priced_sub_recipe_pricePerUnit
-                          ).toFixed(2)}
-                          $
-                        </div>
-                        <button
-                          onClick={() => handleDeleteSub(subrecipe.id)}
-                          className="bg-red-500 text-white p-1 rounded hover:bg-red-700"
-                        >
-                          Delete
-                        </button>
-                      </div>
-                    ))}
                     <input
                       value={searchSub}
                       onChange={handleSub}
-                      onFocus={() => setShowSub(true)}
+                      onFocus={handleSubFocus}
+                      onBlur={handleSubFocus}
                       className="pl-2 py-1 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
-                      placeholder="Search and add a sub-recipe"
+                      placeholder="Search a sub-recipe"
                     ></input>
                     {showSub && (
                       <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-80">
@@ -423,6 +404,40 @@ function NewSub() {
                         )}
                       </div>
                     )}
+                    {selectedSub.map((subrecipe) => (
+                      <div
+                        key={subrecipe.id}
+                        className="flex items-center gap-2 p-2 text-sm"
+                      >
+                        <input
+                          className=" border pl-2 border-gray-300 py-2 rounded-md flex-1"
+                          value={`${subrecipe.priced_sub_recipe_title} - ${subrecipe.priced_sub_recipe_description}`}
+                          readOnly
+                        />
+                        <input
+                          type="number"
+                          min="1"
+                          onChange={(e) =>
+                            handleSubQuantityChange(subrecipe.id, e)
+                          }
+                          className="w-20 pl-1 py-2 border border-gray-300 rounded-md focus:border-gray-600 focus:ring-1 focus:ring-gray-700 focus:outline-none hover:border-gray-700"
+                          placeholder="Quantity"
+                        />
+                        <div>
+                          {(
+                            subrecipe.priced_sub_recipe_quantity *
+                            subrecipe.priced_sub_recipe_pricePerUnit
+                          ).toFixed(2)}
+                          $
+                        </div>
+                        <button
+                          onClick={() => handleDeleteSub(subrecipe.id)}
+                          className="bg-red-500 text-white p-1 rounded hover:bg-red-700"
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </div>

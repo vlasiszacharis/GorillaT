@@ -25,3 +25,7 @@ export interface IngredientPost {
   measurement_unit: string;
   quantity: number;
 }
+export interface DeleteItemProps {
+  item_supplier_name: string;
+  item_supplier_code: string;
+}

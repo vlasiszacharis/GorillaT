@@ -7,26 +7,62 @@ import AddItem from "./AddItem";
 import Modal from "../../components/Modal";
 import { CiEdit } from "react-icons/ci";
 import { MdDelete } from "react-icons/md";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import Button from "../../components/Button";
 import { DataGrid } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { GridColDef } from "@mui/x-data-grid";
-import { getItems } from "../../utils/api/apiClient";
+import { deleteItem, getItems } from "../../utils/api/apiClient";
 import { Ingredient } from "./inventoryTypes";
 import EditItem from "./EditItem";
+
 function Inventory() {
   const [toggleItem, setToggleItem] = useState(false);
   const [toggleEdit, setToggleEdit] = useState(false);
-  const [selectedItemIndex, setSelectedItemIndex] = useState(0);
+  const [supplierName, setSupplierName] = useState("");
+  const [supplierCode, setSupplierCode] = useState("");
+  const [itemName, setItemName] = useState("");
+  const [unit, setUnit] = useState("");
+  const [category, setCategory] = useState("");
+  const [quantity, setQuantity] = useState("");
+
+  const queryClient = useQueryClient();
+
+  const mutation = useMutation(deleteItem, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("Items");
+    },
+    onError: (error) => {
+      console.error("Error deleting item:", error);
+    },
+  });
+  const handleDelete = (params: any) => {
+    const itemData = {
+      item_supplier_name: params.row.item_supplier_name,
+      item_supplier_code: params.row.item_supplier_code,
+    };
+    mutation.mutate(itemData);
+  };
 
   const handleItem = () => {
     setToggleItem(!toggleItem);
   };
 
-  const handleEdit = (index: any) => {
+  const handleEdit = (
+    item_supplier_name: string,
+    item_supplier_code: string,
+    item_name: string,
+    item_measurement_unit: string,
+    item_category: string,
+    item_quantity: any
+  ) => {
     setToggleEdit(!toggleEdit);
-    setSelectedItemIndex(index);
+    setSupplierName(item_supplier_name);
+    setSupplierCode(item_supplier_code);
+    setItemName(item_name);
+    setUnit(item_measurement_unit);
+    setCategory(item_category);
+    setQuantity(item_quantity);
   };
   const { data, isLoading } = useQuery("Items", getItems);
   if (isLoading)
@@ -104,18 +140,37 @@ function Inventory() {
       flex: 1,
       headerAlign: "center",
       align: "center",
-      renderCell: (cellValues) => (
-        <div className="flex flex-row gap-4">
+      minWidth: 120,
+      renderCell: (params: {
+        row: {
+          item_supplier_name: string;
+          item_supplier_code: string;
+          item_name: string;
+          item_measurement_unit: string;
+          item_category: string;
+          item_quantity: any;
+        };
+      }) => (
+        <div className="flex flex-row  gap-4">
           <button
-            onClick={(e) => {
-              e.stopPropagation();
-              handleEdit(cellValues.id);
-            }}
-            className="bg-blue-500 p-2 hover:bg-blue-700 rounded-md"
+            onClick={() =>
+              handleEdit(
+                params.row.item_supplier_name,
+                params.row.item_supplier_code,
+                params.row.item_name,
+                params.row.item_measurement_unit,
+                params.row.item_category,
+                params.row.item_quantity
+              )
+            }
+            className="bg-blue-500 p-3 hover:bg-blue-700 rounded-md"
           >
             <CiEdit />
           </button>
-          <button className="bg-red-500 p-3 hover:bg-red-600 rounded-md">
+          <button
+            onClick={() => handleDelete(params)}
+            className="bg-red-500 p-3 hover:bg-red-600 rounded-md"
+          >
             <MdDelete />
           </button>
         </div>
@@ -174,14 +229,18 @@ function Inventory() {
       {toggleEdit && data && data.length > 0 && (
         <EditItem
           setToggleEdit={setToggleEdit}
-          item_supplier_name={data[selectedItemIndex].item_supplier_name}
-          item_supplier_code={data[selectedItemIndex].item_supplier_code}
+          item_supplier_name={supplierName}
+          item_supplier_code={supplierCode}
+          item_name={itemName}
+          item_measurement_unit={unit}
+          item_category={category}
+          item_quantity={quantity}
         />
       )}
 
       {toggleEdit && <Modal />}
 
-      <div className="h-[647px] w-[95%] bg-white ml-8 font-manrope 3xl:h-[862px]">
+      <div className=" shadow-md h-[647px] w-[95%] bg-white ml-8 font-manrope 3xl:h-[862px]">
         <DataGrid
           rows={rows}
           columns={columns}
@@ -191,6 +250,9 @@ function Inventory() {
               width: "100%",
               fontFamily: "manrope",
               fontSize: "18px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              borderRight: "1px solid #e0e0e0", // Add right border to column headers
             },
             "& .MuiDataGrid-cell": {
               fontFamily: "Manrope, sans-serif",

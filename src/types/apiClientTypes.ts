@@ -72,5 +72,9 @@ export interface PricedSubRecipePost {
 }
 
 export interface AddItemPros {
-  setToggleItem: (value: boolean) => void;
+  setToggleItem: Function;
+}
+
+export interface EditItemPros extends StockItem {
+  setToggleEdit: Function;
 }

@@ -175,7 +175,7 @@ function SuppliersExcel() {
     <>
       <SuppliersMenu />
 
-      <div className="bg-white justify-center items-center flex ml-7 h-[540px] w-[95%]  3xl:h-[755px]">
+      <div className="bg-white shadow-lg justify-center items-center flex ml-7 h-[540px] w-[95%]  3xl:h-[755px]">
         <DataGrid
           rows={rows}
           columns={columns}

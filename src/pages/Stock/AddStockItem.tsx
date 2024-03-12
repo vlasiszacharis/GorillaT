@@ -13,7 +13,10 @@ const FormSchema = Yup.object({
   item_name: Yup.string().required("Item Name is required"),
   item_measurement_unit: Yup.string().required("Unit is required"),
   item_category: Yup.string().required("Category is required"),
-  item_quantity: Yup.number().required("Quantity is required"),
+  item_quantity: Yup.number()
+    .typeError("Only numbers are allowed for Quantity") // Custom message for non-number input
+    .required("Quantity is required") // Custom message for when no value is provided
+    .positive("Quantity must be positive"), // Validation for positive numbers, adjust as needed
 });
 
 function AddStockItem({ setToggleItem }: AddStockItemProps) {

@@ -67,7 +67,7 @@ function SubRecipes() {
 
   return (
     <>
-      <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold bg-slate-100">
+      <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold ">
         <div className="flex flex-row justify-between">
           <h2 className="flex flew-row items-center text-2xl pl-8 font-manrope font-extrabold text-black text-opacity-85 ">
             Sub Recipes
@@ -89,7 +89,7 @@ function SubRecipes() {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-5 items-center py-2 border border-x-stone-950  font-manrope text-xl font-semibold   bg-slate-200 ">
+      <div className="grid shadow-md grid-cols-5 items-center py-2 border   rounded-tr-md rounded-tl-md mx-4 mr-6  font-manrope text-xl font-bold   bg-white  ">
         <span className="flex justify-center items-center">ID</span>
         <span className="flex justify-center items-center">Title</span>
         <span className="flex justify-center items-center">Description</span>
@@ -101,13 +101,17 @@ function SubRecipes() {
           key={index}
           expanded={selectedSubRecipe === index}
           onChange={() => handleSubRecipeClick(index)}
+          sx={{
+            mx: 2,
+            mr: 3,
+          }}
         >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls={`panel${index}a-content`}
             id={`panel${index}a-header`}
           >
-            <div className="grid grid-cols-5 gap-4 w-full items-center font-manrope text-lg opacity-90 font-semibold">
+            <div className="grid grid-cols-5 mx-4 gap-6 w-full items-center font-manrope text-lg opacity-90 font-semibold">
               <span className="text-center">
                 {subRecipeItem.priced_sub_recipe_id}
               </span>
@@ -126,12 +130,16 @@ function SubRecipes() {
             </div>
           </AccordionSummary>
 
-          <AccordionDetails className="flex bg-slate-100 rounded-2xl border-8 flex-col space-y-1 font-manrope ">
+          <AccordionDetails className="flex bg-white rounded-2xl mx-5 flex-col space-y-1 font-manrope ">
             <Typography
               justifyContent="center"
               component="div"
               variant="h5"
               className="underline text-center"
+              sx={{
+                mx: 2,
+                mr: 3,
+              }}
             >
               Ingredients
             </Typography>
@@ -140,7 +148,7 @@ function SubRecipes() {
               (ingredient: any, ingredientIndex: any) => (
                 <div
                   key={ingredientIndex}
-                  className="grid grid-cols-5 gap-4 w-full my-1"
+                  className="grid grid-cols-5 gap-4 w-full my-6"
                 >
                   <span className="text-center">
                     {ingredient.title || ingredient.sub_recipe_id}
