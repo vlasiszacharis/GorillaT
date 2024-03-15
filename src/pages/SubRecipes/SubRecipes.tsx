@@ -7,7 +7,6 @@ import { GridColDef } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getSubRecipes } from "../../utils/api/apiClient";
 import Button from "../../components/Button";
-import { PricedSubRecipeModel } from "../NewSubRecipe/newSubTypes";
 
 import { CiEdit } from "react-icons/ci";
 
