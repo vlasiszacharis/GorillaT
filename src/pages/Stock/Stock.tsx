@@ -124,7 +124,7 @@ function Stock() {
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "",
       flex: 1,
       headerAlign: "center",
       align: "center",

@@ -113,7 +113,7 @@ function SuppliersExcel() {
     },
     {
       field: "actions",
-      headerName: "Actions",
+      headerName: "",
       sortable: false,
       flex: 1,
       minWidth: 120,

@@ -66,8 +66,12 @@ function SubRecipeID({ sub, setToggleEdit }: SubRecipeIDProps) {
 
       {/* <div>Quantity :{data?.priced_sub_recipe_quantity}</div> */}
 
-      <h2 className="font-semibold text-2xl pt-4">Detailed Ingredient Costs</h2>
-
+      <div className="flex flex-row gap-36">
+        <h2 className="font-semibold text-2xl pt-4">
+          Detailed Ingredient Costs
+        </h2>
+        <button className="bg-gray-100 w-10 h-10 rounded-base">Edit</button>
+      </div>
       <table className="table-auto w-full border-collapse ">
         <thead>
           <tr>
