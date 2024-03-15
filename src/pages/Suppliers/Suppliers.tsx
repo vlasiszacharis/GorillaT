@@ -156,7 +156,7 @@ function SuppliersExcel() {
 
   const rows: Supplier[] =
     data?.map((supplier: any, index: any) => ({
-      id: index,
+      id: index + 1,
       ...supplier,
     })) ?? [];
 

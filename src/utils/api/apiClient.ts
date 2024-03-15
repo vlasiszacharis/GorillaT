@@ -5,6 +5,7 @@ import {
   PricedSubRecipeModel,
   DeleteStockItemProps,
   Supplier,
+  PricedSubRecipeModelUnique,
 } from "../../types/apiClientTypes";
 import {
   DeleteItemProps,
@@ -110,9 +111,20 @@ export const postSubRecipe = async (
   return response.data;
 };
 
-export const getSubRecipes = async (): Promise<PricedSubRecipeModel[]> => {
+export const getSubRecipes = async (): Promise<
+  PricedSubRecipeModelUnique[]
+> => {
   const response = await axios.get(
     `${BASE_URL}/api/v1/recipes/subrecipes/priced`
+  );
+  return response.data;
+};
+
+export const getSubRecipe = async (
+  id: number
+): Promise<PricedSubRecipeModelUnique> => {
+  const response = await axios.get(
+    `${BASE_URL}/api/v1/recipes/subrecipes/priced/${id}`
   );
   return response.data;
 };

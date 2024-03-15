@@ -52,9 +52,9 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
     <>
       <div
         id="add_supplier"
-        className="absolute z-50 mx-12 top-16 left-1/3 right-1/3  bg-slate-50 py-8 px-8 flex flex-col font-manrope text-l font-semibold rounded-md"
+        className="absolute z-50 mx-12 top-16 left-1/3 right-1/3  bg-white py-8 px-8 flex flex-col font-manrope text-l font-semibold rounded-md"
       >
-        <div className="flex justify-center items-center w-full text-xl bg-slate-50 mb-4">
+        <div className="flex justify-start font-semibold items-center w-full text-2xl pb-4 bg-white mb-4">
           Add Supplier
         </div>
         <Formik
@@ -69,10 +69,10 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
         >
           <Form className="space-y-6">
             <div className="flex flex-col">
-              <span className="font-bold">Supplier Name</span>
+              <span className="font-bold pb-2">Supplier Name</span>
               <Field
                 name="supplier_name"
-                className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                className="pl-2 py-1 w-full border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
                 placeholder="Add Supplier Name"
               />
               <ErrorMessage
@@ -83,11 +83,11 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-bold">Email Address</span>
+              <span className="font-bold pb-2">Email Address</span>
               <Field
                 name="supplier_email"
                 type="email"
-                className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                className="pl-2 py-1 w-full border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
                 placeholder="Add Email Address"
               />
               <ErrorMessage
@@ -98,10 +98,10 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-bold">Tax Number</span>
+              <span className="font-bold pb-2">Tax Number</span>
               <Field
                 name="supplier_afm"
-                className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                className="pl-2 py-1 w-full border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
                 placeholder="Add Tax Number"
               />
               <ErrorMessage
@@ -112,10 +112,10 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
             </div>
 
             <div className="flex flex-col">
-              <span className="font-bold">Webpage</span>
+              <span className="font-bold pb-2">Webpage</span>
               <Field
                 name="supplier_webpage"
-                className="pl-2 py-1 w-full border border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
+                className="pl-2 py-1 w-full border border-gray-300 rounded focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
                 placeholder="Add Address"
               />
             </div>
@@ -130,7 +130,7 @@ function AddSupplier({ setToggleSupplier }: AddSupplierProps) {
             </div>
           </Form>
         </Formik>
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-8 right-3">
           <button className="cursor-pointer" onClick={handleClick}>
             <IoClose size={30} />
           </button>

@@ -24,7 +24,7 @@ import { useState } from "react";
 import { MdOutlineWarehouse } from "react-icons/md";
 import SubRecipesStock from "./pages/SubRecipesStock/SubRecipesStock";
 import { Tooltip } from "react-tooltip";
-import NewSub from "./pages/AddSubRecipe/NewSub";
+import NewSub from "./pages/NewSubRecipe/NewSub";
 import Account from "./pages/Account/Account";
 
 function App() {

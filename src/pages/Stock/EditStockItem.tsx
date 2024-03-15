@@ -67,7 +67,7 @@ function EditStockItem({
   };
   return (
     <>
-      <div className="absolute z-50 top-20 left-1/3 bg-slate-100 pb-8 py-8 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md">
+      <div className="absolute z-50 top-20 left-1/3 bg-white pb-8 py-5 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md">
         <Formik
           initialValues={{
             item_supplier_name: item_supplier_name,
@@ -81,7 +81,7 @@ function EditStockItem({
           onSubmit={handleSubmit}
         >
           <Form>
-            <div className="text-2xl font-bold text-center mb-8">
+            <div className="text-2xl flex justify-start font-bold text-center mb-8">
               Edit Stock Item
             </div>
             <div className="grid grid-cols-2 gap-6">
@@ -209,7 +209,7 @@ function EditStockItem({
             </div>
           </Form>
         </Formik>
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-5 right-3">
           <button className="cursor-pointer" onClick={handleClick}>
             <IoClose size={30} />
           </button>

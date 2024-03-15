@@ -43,7 +43,7 @@ function EditItem({
       handlePopMessage();
       setTimeout(() => {
         setToggleEdit(false);
-      }, 1500);
+      }, 15000);
     },
     onError: (error) => {
       console.error("Error creating supplier:", error);
@@ -80,7 +80,7 @@ function EditItem({
     <>
       <div
         id="edit_item"
-        className="absolute z-30 top-20 left-1/4 right-1/4 mx-4 bg-slate-100 pb-4 py-2 gap-4 px-10 flex flex-col font-manrope text-l font-semibold rounded-md"
+        className="absolute z-30 top-10 left-1/3 right-1/3 mx-4 bg-white pb-4 py-4 gap-4 px-5 flex flex-col font-manrope text-l font-semibold rounded-md"
       >
         <div className="flex flex-col gap-4 p-2 items-center justify-center">
           <Formik
@@ -97,10 +97,10 @@ function EditItem({
             onSubmit={handleSubmit}
           >
             <Form>
-              <div className="text-2xl font-bold text-center mb-8">
+              <div className="text-2xl flex justify-start font-bold text-center mb-8">
                 Edit Item
               </div>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-2 gap-4">
                 <div className="flex flex-col">
                   <label htmlFor="item_supplier_name" className="font-bold">
                     Supplier Name
@@ -245,7 +245,7 @@ function EditItem({
                   />
                 </div>
               </div>
-              <div className="flex justify-end mt-4 px-2">
+              <div className="flex justify-end mt-6 px-2">
                 <button
                   type="submit"
                   className="bg-custom-navy hover:bg-blue-800 py-2 px-6 w-full justify-center items-center font-normal text-white rounded-md transition duration-150 ease-in-out"
@@ -256,7 +256,7 @@ function EditItem({
             </Form>
           </Formik>
         </div>
-        <div className="absolute top-2 right-2">
+        <div className="absolute top-4 right-3">
           <button className="cursor-pointer" onClick={handleClick}>
             <IoClose size={30} />
           </button>

@@ -24,11 +24,14 @@ import {
   IngredientID,
   IngredientPost,
 } from "../Inventory/inventoryTypes";
+import { useNavigate } from "react-router-dom";
+import PopMessage from "../../components/PopMessage";
 
 function NewSub() {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   //States
-
+  const [successMessage, setSuccessMessage] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [ingredientsMenu, setIngredientsMenu] = useState(false);
   const [selectedIngredients, setSelectedIngredients] = useState<
@@ -50,9 +53,17 @@ function NewSub() {
   const ingredientsCalculate = useCalculatePricePerUnit(items);
   const subRecipeCalculate = useSubRecipeCalculate(subs);
   console.log(subRecipeCalculate);
+  const handlePopMessage = () => {
+    setSuccessMessage(true);
+  };
   const mutation = useMutation(postSubRecipe, {
     onSuccess: () => {
       queryClient.invalidateQueries("SubRecipes");
+      handlePopMessage();
+
+      setTimeout(() => {
+        navigate("/SubRecipes");
+      }, 1200);
     },
     onError: (error) => {
       console.error("Error creating subrecipe:", error);
@@ -445,6 +456,9 @@ function NewSub() {
           </div>
         </form>
       </div>
+      {successMessage && (
+        <PopMessage message={"Sub-Recipe has been added succesfully"} />
+      )}
     </>
   );
 }

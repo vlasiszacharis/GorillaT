@@ -62,6 +62,14 @@ export interface PricedSubRecipeModel {
   priced_sub_recipe_food_cost: number;
   priced_sub_recipe_pricePerUnit: number;
 }
+export interface PricedSubRecipeModelUnique {
+  priced_sub_recipe_id: number;
+  priced_sub_recipe_title: string;
+  priced_sub_recipe_description: string;
+  priced_sub_recipe_ingredients: PricedIngredientModel[];
+  priced_sub_recipe_quantity: number;
+  priced_sub_recipe_food_cost: number;
+}
 export interface PricedSubRecipeModelID extends PricedSubRecipeModel {
   id: string;
 }

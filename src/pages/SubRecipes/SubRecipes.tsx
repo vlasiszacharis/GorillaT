@@ -1,177 +1,181 @@
-import React from "react";
-
+import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useState } from "react";
 import { useQuery } from "react-query";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import Typography from "@mui/material/Typography";
+import { DataGrid } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { getSubRecipes } from "../../utils/api/apiClient";
 import Button from "../../components/Button";
+import { PricedSubRecipeModel } from "../NewSubRecipe/newSubTypes";
+
+import { CiEdit } from "react-icons/ci";
+
+import SubRecipeID from "./SubRecipeID";
+import { PricedSubRecipeModelUnique } from "../../types/apiClientTypes";
+import Modal from "../../components/Modal";
 
 function SubRecipes() {
-  const [toggleSubRecipe, setToggleSubRecipe] = useState(false);
-  const handleClick = () => {
-    setToggleSubRecipe(!toggleSubRecipe);
-  };
-
-  const { data, isLoading } = useQuery("SubRecipe", getSubRecipes);
-  const [selectedSubRecipe, setSelectedSubRecipe] = useState(null);
-
-  if (isLoading)
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
-
+  const [sub, setSub] = useState<number | undefined>(undefined);
+  const [toggleEdit, setToggleEdit] = useState(false);
+  const { data, isLoading, error } = useQuery("SubRecipes", getSubRecipes);
+  if (isLoading) return <LoadingSpinner />;
   if (data && data.length === 0) {
     return (
       <>
-        {" "}
-        <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold bg-slate-100">
-          <div className="flex flex-row justify-between">
-            <h2 className="flex flew-row items-center text-2xl pl-8 font-manrope font-extrabold text-black text-opacity-85 ">
-              Sub Recipes
-            </h2>
-            <div className="flex flex-row justify-end  gap-4 ">
-              <div className="flex flex-row">
-                <Link to="/newsubrecipe">
-                  <div onClick={handleClick}>
-                    <Button
-                      message={"Add Item"}
-                      bgColor={"bg-blue-600"}
-                      hoverBgColor={"hover:bg-custom-navy"}
-                      textColor={"white"}
-                      icon={<FaPlus size={20} />}
-                    />
-                  </div>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
         <div className=" flex flex-col justify-center items-center px-4 w-full font-manrope text-2xl font-semibold pt-4 bg-slate-100 border-gray-600 border pb-4">
-          No sub-recipes.
+          No subrecipes
         </div>
       </>
     );
   }
-  const handleSubRecipeClick = (index: any) => {
-    setSelectedSubRecipe(index === selectedSubRecipe ? null : index);
+  if (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An error occurred";
+    return <div>Error: {errorMessage}</div>;
+  }
+  const handleEdit = (id: number) => {
+    setSub(id);
+    setToggleEdit(!toggleEdit);
   };
+  const columns: GridColDef[] = [
+    {
+      field: "priced_sub_recipe_id",
+      headerName: "ID",
+      flex: 0.5,
+      minWidth: 90,
+      headerAlign: "center",
+      align: "center",
+    },
+
+    {
+      field: "priced_sub_recipe_title",
+      headerName: "Title",
+      flex: 1,
+      minWidth: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "priced_sub_recipe_description",
+      headerName: "Description",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+    },
+
+    {
+      field: "priced_sub_recipe_quantity",
+      headerName: "Quantity",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "priced_sub_recipe_food_cost",
+      headerName: "Food Cost",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "priced_sub_recipe_ingredients",
+      headerName: "Ingredients",
+      sortable: false,
+      flex: 1,
+      maxWidth: 140,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params: {
+        row: {
+          priced_sub_recipe_id: any;
+        };
+      }) => (
+        <>
+          {" "}
+          <button
+            onClick={() => handleEdit(params.row.priced_sub_recipe_id)}
+            className="bg-gray-200 p-3 hover:bg-gray-300 rounded-md"
+          >
+            <CiEdit className="text-gray-800 " />
+          </button>
+        </>
+      ),
+    },
+  ];
+  console.log(data);
+
+  const rows: PricedSubRecipeModelUnique[] =
+    data?.map((supplier: any, index: any) => ({
+      id: index,
+      ...supplier,
+    })) ?? [];
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />.
+      </div>
+    );
 
   return (
     <>
-      <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold ">
-        <div className="flex flex-row justify-between">
-          <h2 className="flex flew-row items-center text-2xl pl-8 font-manrope font-extrabold text-black text-opacity-85 ">
-            Sub Recipes
-          </h2>
-          <div className="flex flex-row justify-end  gap-4 ">
+      <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold bg-slate-100">
+        <div className="ml-2 flex flex-row justify-between">
+          <div className="flex flex-row justify-start  gap-4 ">
             <div className="flex flex-row">
               <Link to="/newsubrecipe">
-                <div onClick={handleClick}>
-                  <Button
-                    message={"SubRecipe"}
-                    bgColor={"bg-blue-600"}
-                    hoverBgColor={"hover:bg-custom-navy"}
-                    textColor={"white"}
-                    icon={<FaPlus size={20} />}
-                  />
-                </div>
+                <Button
+                  message={"SubRecipe"}
+                  bgColor={"bg-blue-600"}
+                  hoverBgColor={"hover:bg-custom-navy"}
+                  textColor={"white"}
+                  icon={<FaPlus size={20} />}
+                />
               </Link>
             </div>
           </div>
         </div>
       </div>
-      <div className="grid shadow-md grid-cols-5 items-center py-2 border   rounded-tr-md rounded-tl-md mx-4 mr-6  font-manrope text-xl font-bold   bg-white  ">
-        <span className="flex justify-center items-center">ID</span>
-        <span className="flex justify-center items-center">Title</span>
-        <span className="flex justify-center items-center">Description</span>
-        <span className="flex justify-center items-center">Quantity</span>
-        <span className="flex justify-center items-center">Food Cost</span>
-      </div>
-      {data?.map((subRecipeItem: any, index: number) => (
-        <Accordion
-          key={index}
-          expanded={selectedSubRecipe === index}
-          onChange={() => handleSubRecipeClick(index)}
+      <div className="bg-white shadow-lg justify-center items-center flex ml-7 h-[640px] w-[95%]  3xl:h-[864px]">
+        <DataGrid
+          rows={rows}
+          columns={columns}
           sx={{
-            mx: 2,
-            mr: 3,
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "700",
+              width: "100%",
+              fontFamily: "manrope",
+              fontSize: "18px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-cell": {
+              fontFamily: "Manrope, sans-serif",
+              fontWeight: "550",
+              width: "100%",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottom: "2px solid #ccc",
+            },
+            "& .MuiDataGrid-columnHeader:last-child": {
+              borderRight: "none",
+            },
+            "& .MuiDataGrid-cell:last-of-type": {
+              borderRight: "none",
+            },
           }}
-        >
-          <AccordionSummary
-            expandIcon={<ExpandMoreIcon />}
-            aria-controls={`panel${index}a-content`}
-            id={`panel${index}a-header`}
-          >
-            <div className="grid grid-cols-5 mx-4 gap-6 w-full items-center font-manrope text-lg opacity-90 font-semibold">
-              <span className="text-center">
-                {subRecipeItem.priced_sub_recipe_id}
-              </span>
-              <span className="text-center">
-                {subRecipeItem.priced_sub_recipe_title}
-              </span>
-              <span className="text-center">
-                {subRecipeItem.priced_sub_recipe_description}
-              </span>
-              <span className="text-center">
-                {subRecipeItem.priced_sub_recipe_quantity}
-              </span>
-              <span className="text-center">
-                {subRecipeItem.priced_sub_recipe_food_cost}
-              </span>
-            </div>
-          </AccordionSummary>
-
-          <AccordionDetails className="flex bg-white rounded-2xl mx-5 flex-col space-y-1 font-manrope ">
-            <Typography
-              justifyContent="center"
-              component="div"
-              variant="h5"
-              className="underline text-center"
-              sx={{
-                mx: 2,
-                mr: 3,
-              }}
-            >
-              Ingredients
-            </Typography>
-            {/* Ingredients Details */}
-            {subRecipeItem.priced_sub_recipe_ingredients.map(
-              (ingredient: any, ingredientIndex: any) => (
-                <div
-                  key={ingredientIndex}
-                  className="grid grid-cols-5 gap-4 w-full my-6"
-                >
-                  <span className="text-center">
-                    {ingredient.title || ingredient.sub_recipe_id}
-                  </span>
-
-                  <span className="text-center">
-                    {ingredient.supplier_code || "N/A"}
-                  </span>
-                  <span className="text-center">
-                    {ingredient.measurement_unit || "N/A"}
-                  </span>
-                  <span className="text-center pr-8">
-                    {ingredient.quantity}
-                  </span>
-                  <span className="text-center">
-                    {ingredient.food_cost || "Type: " + ingredient.type}
-                  </span>
-                </div>
-              )
-            )}
-          </AccordionDetails>
-        </Accordion>
-      ))}
+        />
+      </div>
+      {sub !== undefined && toggleEdit && (
+        <SubRecipeID sub={sub} setToggleEdit={setToggleEdit} />
+      )}
+      {sub !== undefined && toggleEdit && <Modal />}
     </>
   );
 }
