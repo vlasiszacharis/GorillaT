@@ -19,14 +19,8 @@ function SubRecipes() {
   const [toggleEdit, setToggleEdit] = useState(false);
   const { data, isLoading, error } = useQuery("SubRecipes", getSubRecipes);
   if (isLoading) return <LoadingSpinner />;
-  if (data && data.length === 0) {
-    return (
-      <>
-        <div className=" flex flex-col justify-center items-center px-4 w-full font-manrope text-2xl font-semibold pt-4 bg-slate-100 border-gray-600 border pb-4">
-          No subrecipes
-        </div>
-      </>
-    );
+  if (data === null || data === undefined) {
+    return <div>No data available.</div>;
   }
   if (error) {
     const errorMessage =

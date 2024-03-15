@@ -24,6 +24,9 @@ function SubRecipeID({ sub, setToggleEdit }: SubRecipeIDProps) {
         </div>
       </>
     );
+  if (data === null || data === undefined) {
+    return <div>No data available.</div>;
+  }
   const handleClick = () => {
     setToggleEdit(false);
   };
