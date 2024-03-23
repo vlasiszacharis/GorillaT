@@ -129,6 +129,13 @@ export const getSubRecipe = async (
   return response.data;
 };
 
+export const postSubRecipeID = async (id: number) => {
+  const response = await axios.post(
+    `${BASE_URL}/api/v1/recipes/subrecipes/priced${id}`
+  );
+  return response.data;
+};
+
 //Stock Sub Recipe
 export const getStockSubRecipe = async () => {
   const response = await axios.get(`${BASE_URL}/api/v1/stock/subrecipes`);

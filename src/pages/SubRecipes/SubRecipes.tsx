@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { useQuery } from "react-query";
+import { useMutation, useQuery } from "react-query";
 import { DataGrid } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { getSubRecipes } from "../../utils/api/apiClient";
+import { getSubRecipes, postSubRecipeID } from "../../utils/api/apiClient";
 import Button from "../../components/Button";
+import { FaCheck } from "react-icons/fa6";
 
 import { CiEdit } from "react-icons/ci";
 
@@ -18,6 +19,15 @@ function SubRecipes() {
   const [sub, setSub] = useState<number | undefined>(undefined);
   const [toggleEdit, setToggleEdit] = useState(false);
   const { data, isLoading, error } = useQuery("SubRecipes", getSubRecipes);
+
+  const mutation = useMutation(postSubRecipeID, {
+    onSuccess: (data) => {
+      console.log("Data posted successfully", data);
+    },
+    onError: (error) => {
+      console.error("Failed to post data", error);
+    },
+  });
   if (isLoading) return <LoadingSpinner />;
   if (data === null || data === undefined) {
     return <div>No data available.</div>;
@@ -27,6 +37,10 @@ function SubRecipes() {
       error instanceof Error ? error.message : "An error occurred";
     return <div>Error: {errorMessage}</div>;
   }
+
+  const handleExecution = (id: number) => {
+    mutation.mutate(id);
+  };
   const handleEdit = (id: number) => {
     setSub(id);
     setToggleEdit(!toggleEdit);
@@ -89,12 +103,21 @@ function SubRecipes() {
       }) => (
         <>
           {" "}
-          <button
-            onClick={() => handleEdit(params.row.priced_sub_recipe_id)}
-            className="bg-gray-200 p-3 hover:bg-gray-300 rounded-md"
-          >
-            <CiEdit className="text-gray-800 " />
-          </button>
+          <div className="flex flex-row gap-2">
+            {" "}
+            <button
+              onClick={() => handleEdit(params.row.priced_sub_recipe_id)}
+              className="bg-gray-200 p-3 hover:bg-gray-300 rounded-md"
+            >
+              <CiEdit className="text-gray-800 " />
+            </button>
+            <button
+              onClick={() => handleExecution(params.row.priced_sub_recipe_id)}
+              className="bg-green-200 p-3 hover:bg-green-300 rounded-md"
+            >
+              <FaCheck />
+            </button>
+          </div>
         </>
       ),
     },
