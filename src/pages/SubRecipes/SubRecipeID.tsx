@@ -2,7 +2,7 @@ import React from "react";
 import { getSubRecipe } from "../../utils/api/apiClient";
 import { useQuery } from "react-query";
 
-import { PricedIngredientModel } from "../NewSubRecipe/newSubTypes";
+import { PricedIngredientModel } from "./NewSubRecipe/newSubTypes";
 import { IoBookSharp, IoClose } from "react-icons/io5";
 import { TbCoins } from "react-icons/tb";
 import LoadingSpinner from "../../components/LoadingSpinner";

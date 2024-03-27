@@ -19,17 +19,20 @@ import {
   MdOutlineWarehouse,
   MdOutlineInventory,
   MdAccountCircle,
+  MdOutlineRestaurantMenu,
 } from "react-icons/md";
 import { FaBookOpen, FaBook } from "react-icons/fa";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { IoMdHome } from "react-icons/io";
 import { useState } from "react";
-import SubRecipesStock from "./pages/SubRecipesStock/SubRecipesStock";
+import SubRecipesStock from "./pages/SubRecipes/SubRecipesStock/SubRecipesStock";
 import { Tooltip } from "react-tooltip";
-import NewSub from "./pages/NewSubRecipe/NewSub";
+import NewSub from "./pages/SubRecipes/NewSubRecipe/NewSub";
 import Account from "./pages/Account/Account";
-import SignUp from "./pages/SignUp/SignUp";
+import SignUp from "./pages/SignUser/SignUp/SignUp";
 import { IoSettingsOutline } from "react-icons/io5";
+import SignIn from "./pages/SignUser/SignIn/SignIn";
+import { Menu } from "@mui/icons-material";
 
 function App() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -43,6 +46,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/signin" element={<SignIn />} />
         </Routes>
       </main>
 
@@ -71,7 +75,7 @@ function App() {
               </button>
             )}
 
-            <div className="flex justify-start items-center gap-1 pb-5 ">
+            <div className="flex justify-start items-center gap-1 pb-2 ">
               <img src={logo} width={"70px"} className="App-logo" alt="logo" />
 
               {!isCollapsed && (
@@ -80,7 +84,7 @@ function App() {
                 </h1>
               )}
             </div>
-            <div className="flex flex-col gap-3 pb-14 3xl:pb-52">
+            <div className="flex flex-col gap-3 pb-10 3xl:pb-52">
               <NavLink
                 data-tooltip-id="overview"
                 data-tooltip-content="Overview"
@@ -182,7 +186,22 @@ function App() {
                 {!isCollapsed && <span>Recipes</span>}
                 {isCollapsed && <Tooltip id="recipes" place="right" />}
               </NavLink>
-
+              <NavLink
+                data-tooltip-id="menu"
+                data-tooltip-content="Menu"
+                className={({ isActive }) =>
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                    isActive
+                      ? "bg-white font-bold text-blue-700 rounded-lg"
+                      : "text-white hover:bg-white/30"
+                  }`
+                }
+                to="/menu"
+              >
+                <MdOutlineRestaurantMenu size={28} />
+                {!isCollapsed && <span>Menu</span>}
+                {isCollapsed && <Tooltip id="account" place="right" />}
+              </NavLink>
               <NavLink
                 data-tooltip-id="report"
                 data-tooltip-content="Report"
@@ -204,7 +223,7 @@ function App() {
                 data-tooltip-id="settings"
                 data-tooltip-content="Settings"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -216,24 +235,25 @@ function App() {
                 {!isCollapsed && <span>Settings</span>}
                 {isCollapsed && <Tooltip id="settings" place="right" />}
               </NavLink>
-            </div>
-            <div className="flex flex-col gap-3 pb-1">
-              <NavLink
-                data-tooltip-id="account"
-                data-tooltip-content="Account"
-                className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
-                    isActive
-                      ? "bg-white font-bold text-blue-700 rounded-lg"
-                      : "text-white hover:bg-white/30"
-                  }`
-                }
-                to="/account"
-              >
-                <MdAccountCircle size={28} />
-                {!isCollapsed && <span>Account</span>}
-                {isCollapsed && <Tooltip id="account" place="right" />}
-              </NavLink>
+
+              <div className="flex flex-col gap-3 pb-6  ">
+                <NavLink
+                  data-tooltip-id="account"
+                  data-tooltip-content="Account"
+                  className={({ isActive }) =>
+                    `flex items-center justify-start gap-5 mb-2 mt-4 px-4 py-2 text-lg ${
+                      isActive
+                        ? "bg-white font-bold text-blue-700 rounded-lg"
+                        : "text-white hover:bg-white/30"
+                    }`
+                  }
+                  to="/account"
+                >
+                  <MdAccountCircle size={24} />
+                  {!isCollapsed && <span>Account</span>}
+                  {isCollapsed && <Tooltip id="account" place="right" />}
+                </NavLink>
+              </div>
             </div>
           </aside>
 
@@ -255,6 +275,7 @@ function App() {
               <Route path="/newsubrecipe" element={<NewSub />} />
               <Route path="/stocksubrecipe" element={<SubRecipesStock />} />
               <Route path="/account" element={<Account />} />
+              <Route path="/menu" element={<Menu />} />
             </Routes>
           </main>
         </div>

@@ -9,7 +9,7 @@ import EditStockItem from "./EditStockItem";
 import { DataGrid } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import { GridColDef } from "@mui/x-data-grid";
-import SubRecipesStock from "../SubRecipesStock/SubRecipesStock";
+import SubRecipesStock from "../SubRecipes/SubRecipesStock/SubRecipesStock";
 import { deleteStockItem, getStockItems } from "../../utils/api/apiClient";
 import { StockItem } from "../../types/apiClientTypes";
 import StockMenu from "./StockMenu";

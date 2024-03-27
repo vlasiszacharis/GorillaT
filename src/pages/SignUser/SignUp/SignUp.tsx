@@ -1,33 +1,43 @@
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import logo from "../../assets/logo.png";
-import { Link } from "react-router-dom";
+import logo from "../../../assets/logo.png";
+import { Link, useNavigate } from "react-router-dom";
+import { postSignUp } from "../../../utils/api/apiClient";
+import { useMutation, useQueryClient } from "react-query";
 const ItemSchema = Yup.object({
-  item_supplier_name: Yup.string().required("Supplier Name is required"),
-  item_supplier_code: Yup.string().required("Supplier Code is required"),
-  item_name: Yup.string().required("Item Name is required"),
-  item_measurement_unit: Yup.string().required("Unit is required"),
-  item_category: Yup.string().required("Category is required"),
-  item_quantity: Yup.number()
-    .typeError("Only numbers are allowed for Quantity") // Custom message for non-number input
-    .required("Quantity is required") // Custom message for when no value is provided
-    .positive("Quantity must be positive"), // Validation for positive numbers, adjust as needed
-  item_description: Yup.string().required("Description is required"),
+  name: Yup.string().required("Name is required"),
+  password: Yup.string().required("Password is required"),
+  acceptTerms: Yup.bool()
+    .oneOf([true], "You must accept the terms and conditions")
+    .required("You must accept the terms and conditions"),
 });
+
 function SignUp() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+  const mutation = useMutation(postSignUp, {
+    onSuccess: () => {
+      queryClient.invalidateQueries("SignUp");
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1200);
+    },
+    onError: (error) => {
+      console.error("Failed to post data", error);
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1200);
+    },
+  });
+
   const handleSubmit = (values: any) => {
-    // const newSupplier = {
-    //   item_supplier_name: values.item_supplier_name,
-    //   item_supplier_code: values.item_supplier_code,
-    //   item_name: values.item_name,
-    //   item_measurement_unit: values.item_measurement_unit,
-    //   item_category: values.item_category,
-    //   item_quantity: values.item_quantity,
-    //   item_description: values.item_description,
-    //   item_price: values.item_price,
-    // };
-    console.log(values);
+    const newUser = {
+      name: "name",
+      password: "password",
+    };
+
+    mutation.mutate(newUser);
   };
   return (
     <>
@@ -43,13 +53,9 @@ function SignUp() {
           <div className="flex flex-col p-8 gap-4 bg-white rounded-lg  ">
             <Formik
               initialValues={{
-                item_supplier_name: "",
-                item_supplier_code: "",
-                item_name: "",
-                item_measurement_unit: "",
-                item_category: "",
-                item_quantity: "",
-                item_description: "",
+                name: "",
+                password: "",
+                acceptTerms: false,
               }}
               validationSchema={ItemSchema}
               onSubmit={handleSubmit}
@@ -60,43 +66,46 @@ function SignUp() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="flex flex-col col-span-2">
-                    <label htmlFor="item_price" className="font-bold">
+                    <label htmlFor="name" className="font-bold">
                       Name
                     </label>
                     <Field
-                      name="item_price"
+                      name="name"
                       className="mt-1 py-2 w-full pl-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
-                      placeholder="Add Price"
+                      placeholder="Add Name"
                     />
                     <ErrorMessage
-                      name="item_price"
+                      name="name"
                       component="div"
                       className="text-red-600"
                     />
                   </div>
                   <div className="flex flex-col col-span-2">
-                    <label htmlFor="item_price" className="font-bold">
-                      Email
+                    <label htmlFor="password" className="font-bold">
+                      Password
                     </label>
                     <Field
-                      name="item_price"
+                      name="password"
                       className="mt-1 py-2 w-full pl-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
-                      placeholder="Add Price"
+                      placeholder="Add Password"
                     />
                     <ErrorMessage
-                      name="item_price"
+                      name="password"
                       component="div"
                       className="text-red-600"
                     />
                   </div>
 
                   <div className="flex flex-row gap-2 col-span-2">
-                    {" "}
                     <Field type="checkbox" name="acceptTerms" />
-                    <label htmlFor="acceptTerms pb-1">
+                    <label htmlFor="acceptTerms">
                       I accept the terms & conditions
                     </label>
-                    <ErrorMessage name="acceptTerms" component="div" />
+                    <ErrorMessage
+                      name="acceptTerms"
+                      component="div"
+                      className="text-red-600"
+                    />
                   </div>
                 </div>
                 <div className="flex justify-end mt-4 px-2 pt-6">

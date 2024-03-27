@@ -4,6 +4,7 @@ import { TbCoins } from "react-icons/tb";
 import { FaBook } from "react-icons/fa";
 import { VictoryBar, VictoryChart, VictoryAxis, VictoryTheme } from "victory";
 import { VictoryPie } from "victory";
+import { Link } from "react-router-dom";
 function Dashboard() {
   const data = [
     { supplier: 1, value: 5000 },
@@ -24,6 +25,12 @@ function Dashboard() {
       <div className="flex flex-col h-screen ">
         <div className="flex flex-row justify-between items-center p-6 pr-16 font-manrope font-bold text-xl">
           <h2 className="text-3xl font-bold">Botrini's</h2>
+          <Link to="/signup" className="font-semibold text-2xl">
+            Signup
+          </Link>
+          <Link to="/signin" className="font-semibold text-2xl">
+            Signin
+          </Link>
         </div>
 
         <div className="grid p-2 gap-8 mr-6 ml-6 grid-cols-3 items-start justify-center flex-grow">

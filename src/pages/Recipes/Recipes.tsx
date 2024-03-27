@@ -1,136 +1,197 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
-import { IoIosHome } from "react-icons/io";
-import { FaFilter } from "react-icons/fa6";
-import { useState } from "react";
-import AddRecipes from "./AddRecipes";
-import Modal from "../../components/Modal";
-import { FaSearch } from "react-icons/fa";
-function Recipes() {
-  const [toggleRecipe, setToggleRecipe] = useState(false);
+import { Link } from "react-router-dom";
+import { useMutation, useQuery } from "react-query";
+import { DataGrid } from "@mui/x-data-grid";
+import { GridColDef } from "@mui/x-data-grid";
+import LoadingSpinner from "../../components/LoadingSpinner";
+import { getSubRecipes, postSubRecipeID } from "../../utils/api/apiClient";
+import Button from "../../components/Button";
+import { FaCheck } from "react-icons/fa6";
 
-  const handleNewRecipe = () => {
-    setToggleRecipe(!toggleRecipe);
+import { CiEdit } from "react-icons/ci";
+
+// import SubRecipeID from "./SubRecipeID";
+import { PricedSubRecipeModelUnique } from "../../types/apiClientTypes";
+import Modal from "../../components/Modal";
+
+function Recipes() {
+  const [sub, setSub] = useState<number | undefined>(undefined);
+  const [toggleEdit, setToggleEdit] = useState(false);
+  const { data, isLoading, error } = useQuery("SubRecipes", getSubRecipes);
+
+  const mutation = useMutation(postSubRecipeID, {
+    onSuccess: (data) => {
+      console.log("Data posted successfully", data);
+    },
+    onError: (error) => {
+      console.error("Failed to post data", error);
+    },
+  });
+  if (isLoading) return <LoadingSpinner />;
+  if (data === null || data === undefined) {
+    return <div>No data available.</div>;
+  }
+  if (error) {
+    const errorMessage =
+      error instanceof Error ? error.message : "An error occurred";
+    return <div>Error: {errorMessage}</div>;
+  }
+
+  const handleExecution = (id: number) => {
+    mutation.mutate(id);
   };
+  const handleEdit = (id: number) => {
+    setSub(id);
+    setToggleEdit(!toggleEdit);
+  };
+  const columns: GridColDef[] = [
+    {
+      field: "priced_sub_recipe_id",
+      headerName: "ID",
+      flex: 0.5,
+      minWidth: 90,
+      headerAlign: "center",
+      align: "center",
+    },
+
+    {
+      field: "priced_sub_recipe_title",
+      headerName: "Title",
+      flex: 1,
+      minWidth: 150,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "priced_sub_recipe_description",
+      headerName: "Description",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+    },
+
+    {
+      field: "priced_sub_recipe_quantity",
+      headerName: "Quantity",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "priced_sub_recipe_food_cost",
+      headerName: "Food Cost",
+      flex: 1,
+      minWidth: 120,
+      headerAlign: "center",
+      align: "center",
+    },
+    {
+      field: "priced_sub_recipe_ingredients",
+      headerName: "Ingredients",
+      sortable: false,
+      flex: 1,
+      maxWidth: 140,
+      headerAlign: "center",
+      align: "center",
+      renderCell: (params: {
+        row: {
+          priced_sub_recipe_id: any;
+        };
+      }) => (
+        <>
+          {" "}
+          <div className="flex flex-row gap-2">
+            {" "}
+            <button
+              onClick={() => handleEdit(params.row.priced_sub_recipe_id)}
+              className="bg-gray-200 p-3 hover:bg-gray-300 rounded-md"
+            >
+              <CiEdit className="text-gray-800 " />
+            </button>
+            <button
+              onClick={() => handleExecution(params.row.priced_sub_recipe_id)}
+              className="bg-green-200 p-3 hover:bg-green-300 rounded-md"
+            >
+              <FaCheck />
+            </button>
+          </div>
+        </>
+      ),
+    },
+  ];
+  console.log(data);
+
+  const rows: PricedSubRecipeModelUnique[] =
+    data?.map((supplier: any, index: any) => ({
+      id: index,
+      ...supplier,
+    })) ?? [];
+
+  if (isLoading)
+    return (
+      <div>
+        <LoadingSpinner />.
+      </div>
+    );
+
   return (
     <>
-      <div
-        id="recipes_main"
-        className="grid grid-cols-3 max-lg:grid-cols-2 max-md:grid-cols-1 pt-16 bg-slate-200   gap-2 items-center font-manrope text-2xl font-semibold  max-lg:ml-48 max-md:ml-0 "
-      >
-        <span className="flex flex-col items-center justify-center py-12 mx-2  bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            <span className="flex flex-row pl-4">All</span>
-          </button>
-        </span>
-
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-x bg-slate-100 ">
-          <span>Photo</span>
-
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Breakfast
-          </button>
-        </span>
-
-        <span className="flex flex-col items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Lunch
-          </button>
-        </span>
-
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Main Dish
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Dessert
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100 ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Starters
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Snack
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Appetizer
-          </button>
-        </span>
-        <span className="flex  flex-col items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Appetizer
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Appetizer
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Appetizer
-          </button>
-        </span>
-        <span className="flex flex-col  items-center justify-center py-12 mx-2 rounded-xl bg-slate-100  ">
-          <span>Photo</span>
-          <button className="relative top-12 bg-blue-500 w-full text-white text-opacity-80 rounded-lg">
-            Appetizer
-          </button>
-        </span>
-      </div>
-      <div
-        id="recipes_nav"
-        className="flex flex-row absolute top-4 right-8 font-manrope justify-center items-center rounded-md"
-      >
-        <div>
-          <span className="absolute top-3 left-2">
-            <FaSearch />
-          </span>
-
-          <input
-            placeholder="Search recipes"
-            className="pl-10 p-1 px-4 border border-gray-300 rounded-xl focus:border-gray-600 focus:ring-1 focus:ring-gray-600 focus:outline-none hover:border-gray-800"
-          ></input>
-        </div>
-
-        <div className="flex justify-start  pl-4 items-center hover:text-black text-black text-opacity-70 ">
-          <FaPlus />
-
-          <button
-            onClick={handleNewRecipe}
-            className=" font-semibold py-2 px-2 rounded  "
-          >
-            New Recipe
-          </button>
-        </div>
-        <div className="flex justify-start items-center pl-4   hover:text-black text-black text-opacity-70">
-          <IoIosHome />
-          <button className=" font-semibold py-2 px-3 rounded ">Home</button>
-        </div>
-        <div className="flex justify-start items-center pl-4  hover:text-black text-black text-opacity-70">
-          <FaFilter />
-          <button className=" font-semibold py-2 px-3  rounded">Filter</button>
+      <div className=" p-4 pr-20 gap-2 font-manrope text-l text-black text-opacity-70   font-semibold bg-slate-100">
+        <div className="ml-2 flex flex-row justify-between">
+          <div className="flex flex-row justify-start  gap-4 ">
+            <div className="flex flex-row">
+              <Link to="/newsubrecipe">
+                <Button
+                  message={"Recipe"}
+                  bgColor={"bg-blue-600"}
+                  hoverBgColor={"hover:bg-custom-navy"}
+                  textColor={"white"}
+                  icon={<FaPlus size={20} />}
+                />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
-      {toggleRecipe && <AddRecipes setToggleRecipe={setToggleRecipe} />}
-      {toggleRecipe && <Modal />}
+      <div className="bg-white shadow-lg justify-center items-center flex ml-7 h-[640px] w-[95%]  3xl:h-[864px]">
+        <DataGrid
+          rows={rows}
+          columns={columns}
+          sx={{
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "700",
+              width: "100%",
+              fontFamily: "manrope",
+              fontSize: "18px",
+            },
+            "& .MuiDataGrid-columnHeader": {
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-cell": {
+              fontFamily: "Manrope, sans-serif",
+              fontWeight: "550",
+              width: "100%",
+              borderRight: "1px solid #ccc",
+            },
+            "& .MuiDataGrid-columnHeaders": {
+              borderBottom: "2px solid #ccc",
+            },
+            "& .MuiDataGrid-columnHeader:last-child": {
+              borderRight: "none",
+            },
+            "& .MuiDataGrid-cell:last-of-type": {
+              borderRight: "none",
+            },
+          }}
+        />
+      </div>
+      {/* {sub !== undefined && toggleEdit && (
+        <SubRecipeID sub={sub} setToggleEdit={setToggleEdit} />
+      )} */}
+      {sub !== undefined && toggleEdit && <Modal />}
     </>
   );
 }

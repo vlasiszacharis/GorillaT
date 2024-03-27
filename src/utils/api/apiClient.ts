@@ -141,3 +141,41 @@ export const getStockSubRecipe = async () => {
   const response = await axios.get(`${BASE_URL}/api/v1/stock/subrecipes`);
   return response.data;
 };
+
+//Sign up  , 'SignUp'
+export const postSignUp = async (postUser: any) => {
+  const config = {
+    headers: {
+      // Example headers
+      "Content-Type": "application/json",
+      Authorization: "Bearer yourTokenHere", // If you need to send a token
+      // Add other headers here as needed
+    },
+  };
+
+  const response = await axios.post(
+    `${BASE_URL}/api/v1/users/signup`,
+    postUser,
+    config
+  );
+  return response.data;
+};
+
+//Sign In  , 'SignIn'
+export const postSignIn = async (postUser: any) => {
+  const config = {
+    headers: {
+      // Example headers
+      "Content-Type": "application/json",
+      Authorization: "Bearer yourTokenHere", // If you need to send a token
+      // Add other headers here as needed
+    },
+  };
+
+  const response = await axios.post(
+    `${BASE_URL}/api/v1/users/signup`,
+    postUser,
+    config
+  );
+  return response.data;
+};

@@ -2,18 +2,18 @@ import React from "react";
 import { useQuery, useQueryClient, useMutation } from "react-query";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 import { ChangeEvent } from "react";
 import { FaRegLemon } from "react-icons/fa";
 import { IoBookSharp } from "react-icons/io5";
 
-import useCalculatePricePerUnit from "../../hooks/useCalculatePricePerUnit";
-import useSubRecipeCalculate from "../../hooks/useSubRecipeCalculate";
+import useCalculatePricePerUnit from "../../../hooks/useCalculatePricePerUnit";
+import useSubRecipeCalculate from "../../../hooks/useSubRecipeCalculate";
 import {
   getItems,
   postSubRecipe,
   getSubRecipes,
-} from "../../utils/api/apiClient";
+} from "../../../utils/api/apiClient";
 import {
   PricedSubRecipeModelID,
   PricedSubRecipeModel,
@@ -23,9 +23,9 @@ import {
   Ingredient,
   IngredientID,
   IngredientPost,
-} from "../Inventory/inventoryTypes";
+} from "../../Inventory/inventoryTypes";
 import { useNavigate } from "react-router-dom";
-import PopMessage from "../../components/PopMessage";
+import PopMessage from "../../../components/PopMessage";
 
 function NewSub() {
   const queryClient = useQueryClient();

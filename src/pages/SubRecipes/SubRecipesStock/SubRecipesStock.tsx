@@ -1,8 +1,8 @@
 import React from "react";
 import { useQuery } from "react-query";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../../components/LoadingSpinner";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { getStockSubRecipe } from "../../utils/api/apiClient";
+import { getStockSubRecipe } from "../../../utils/api/apiClient";
 
 function SubRecipesStock() {
   const { data: items, isLoading: subLoading } = useQuery(
