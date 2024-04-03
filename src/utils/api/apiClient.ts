@@ -194,19 +194,19 @@ export const postSignUp = async (userData: any) => {
 };
 
 //Sign In  , 'SignIn'
-// export const postSignIn = async (userData: any) => {
-//   const userCredentials = btoa(`${userData.username}:${userData.password}`);
-//   const response = await axios.post(
-//     `${BASE_URL}/api/v1/signin`,
-//     {},
-//     {
-//       headers: {
-//         Authorization: `Basic ${userCredentials}`,
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   );
-//   sessionStorage.setItem("isAuthenticated", "true");
-//   sessionStorage.setItem("authCredentials", userCredentials);
-//   return response.data;
-// };
+export const postSignIn = async (userData: any) => {
+  const userCredentials = btoa(`${userData.username}:${userData.password}`);
+  const response = await axios.post(
+    `${BASE_URL}/api/v1/signin`,
+    {},
+    {
+      headers: {
+        Authorization: `Basic ${userCredentials}`,
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  sessionStorage.setItem("isAuthenticated", "true");
+  sessionStorage.setItem("authCredentials", userCredentials);
+  return response.data;
+};
