@@ -33,6 +33,7 @@ import SignUp from "./pages/SignUser/SignUp/SignUp";
 import { IoSettingsOutline } from "react-icons/io5";
 import SignIn from "./pages/SignUser/SignIn/SignIn";
 import { Menu } from "@mui/icons-material";
+import NavigationHandler from "./components/NavigationHandler";
 
 function App() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -43,6 +44,8 @@ function App() {
   };
   return (
     <>
+      <NavigationHandler />
+
       <main>
         <Routes>
           <Route path="/signup" element={<SignUp />} />

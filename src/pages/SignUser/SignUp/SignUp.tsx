@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { postSignUp } from "../../../utils/api/apiClient";
 import { useMutation, useQueryClient } from "react-query";
 const ItemSchema = Yup.object({
-  name: Yup.string().required("Name is required"),
+  username: Yup.string().required("Username is required"),
   password: Yup.string().required("Password is required"),
   acceptTerms: Yup.bool()
     .oneOf([true], "You must accept the terms and conditions")
@@ -25,16 +25,13 @@ function SignUp() {
     },
     onError: (error) => {
       console.error("Failed to post data", error);
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 1200);
     },
   });
 
   const handleSubmit = (values: any) => {
     const newUser = {
-      name: "name",
-      password: "password",
+      username: values.username,
+      password: values.password,
     };
 
     mutation.mutate(newUser);
@@ -53,7 +50,7 @@ function SignUp() {
           <div className="flex flex-col p-8 gap-4 bg-white rounded-lg  ">
             <Formik
               initialValues={{
-                name: "",
+                username: "",
                 password: "",
                 acceptTerms: false,
               }}
@@ -66,16 +63,16 @@ function SignUp() {
                 </div>
                 <div className="grid grid-cols-2 gap-2">
                   <div className="flex flex-col col-span-2">
-                    <label htmlFor="name" className="font-bold">
+                    <label htmlFor="username" className="font-bold">
                       Name
                     </label>
                     <Field
-                      name="name"
+                      name="username"
                       className="mt-1 py-2 w-full pl-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring-2 focus:ring-blue-500 focus:outline-none transition duration-150 ease-in-out"
-                      placeholder="Add Name"
+                      placeholder="Add username"
                     />
                     <ErrorMessage
-                      name="name"
+                      name="username"
                       component="div"
                       className="text-red-600"
                     />

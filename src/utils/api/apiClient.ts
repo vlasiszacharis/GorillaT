@@ -13,6 +13,39 @@ import {
 } from "../../pages/Inventory/inventoryTypes";
 //Suppliers , "Suppliers"
 
+axios.interceptors.response.use(
+  (response) => response, // Just pass through successful responses
+  (error) => {
+    // If any response is a 401 Unauthorized, redirect to sign-in
+    if (error.response && error.response.status === 401) {
+      const navigationEvent = new CustomEvent("navigateTo", {
+        detail: "/signup",
+      });
+      window.dispatchEvent(navigationEvent);
+    }
+    return Promise.reject(error); // Handle other errors as usual
+  }
+);
+axios.interceptors.request.use(
+  (config) => {
+    const pathsToExclude = ["/api/v1/signin", "/api/v1/register"];
+
+    const isExcludedPath = pathsToExclude.some(
+      (path) => config.url && config.url.includes(path)
+    );
+
+    const isAuthenticated = sessionStorage.getItem("isAuthenticated");
+    const authCredentials = sessionStorage.getItem("authCredentials");
+
+    if (!isExcludedPath && isAuthenticated && authCredentials) {
+      config.headers["Authorization"] = `Basic ${authCredentials}`;
+    }
+
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
+
 export const getSuppliers = async (): Promise<Supplier[]> => {
   const response = await axios.get(`${BASE_URL}/api/v1/suppliers`);
   return response.data;
@@ -143,39 +176,37 @@ export const getStockSubRecipe = async () => {
 };
 
 //Sign up  , 'SignUp'
-export const postSignUp = async (postUser: any) => {
-  const config = {
+export const postSignUp = async (userData: any) => {
+  console.log(userData);
+  const username = "gorillas";
+  const password = "gorillas";
+  const basicAuth = "Basic " + btoa(username + ":" + password);
+  const userCredentials = btoa(`${userData.username}:${userData.password}`);
+  const response = await axios.post(`${BASE_URL}/api/v1/register`, userData, {
     headers: {
-      // Example headers
       "Content-Type": "application/json",
-      Authorization: "Bearer yourTokenHere", // If you need to send a token
-      // Add other headers here as needed
+      Authorization: basicAuth,
     },
-  };
-
-  const response = await axios.post(
-    `${BASE_URL}/api/v1/users/signup`,
-    postUser,
-    config
-  );
+  });
+  sessionStorage.setItem("isAuthenticated", "true");
+  sessionStorage.setItem("authCredentials", userCredentials);
   return response.data;
 };
 
 //Sign In  , 'SignIn'
-export const postSignIn = async (postUser: any) => {
-  const config = {
-    headers: {
-      // Example headers
-      "Content-Type": "application/json",
-      Authorization: "Bearer yourTokenHere", // If you need to send a token
-      // Add other headers here as needed
-    },
-  };
-
-  const response = await axios.post(
-    `${BASE_URL}/api/v1/users/signup`,
-    postUser,
-    config
-  );
-  return response.data;
-};
+// export const postSignIn = async (userData: any) => {
+//   const userCredentials = btoa(`${userData.username}:${userData.password}`);
+//   const response = await axios.post(
+//     `${BASE_URL}/api/v1/signin`,
+//     {},
+//     {
+//       headers: {
+//         Authorization: `Basic ${userCredentials}`,
+//         "Content-Type": "application/json",
+//       },
+//     }
+//   );
+//   sessionStorage.setItem("isAuthenticated", "true");
+//   sessionStorage.setItem("authCredentials", userCredentials);
+//   return response.data;
+// };
