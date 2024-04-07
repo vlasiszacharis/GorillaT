@@ -6,24 +6,23 @@ import {
   DeleteStockItemProps,
   Supplier,
   PricedSubRecipeModelUnique,
+  RecipeModelUnique,
 } from "../../types/apiClientTypes";
 import {
   DeleteItemProps,
   Ingredient,
 } from "../../pages/Inventory/inventoryTypes";
-//Suppliers , "Suppliers"
 
 axios.interceptors.response.use(
-  (response) => response, // Just pass through successful responses
+  (response) => response,
   (error) => {
-    // If any response is a 401 Unauthorized, redirect to sign-in
     if (error.response && error.response.status === 401) {
       const navigationEvent = new CustomEvent("navigateTo", {
         detail: "/signup",
       });
       window.dispatchEvent(navigationEvent);
     }
-    return Promise.reject(error); // Handle other errors as usual
+    return Promise.reject(error);
   }
 );
 axios.interceptors.request.use(
@@ -45,6 +44,8 @@ axios.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+//Suppliers , "Suppliers"
 
 export const getSuppliers = async (): Promise<Supplier[]> => {
   const response = await axios.get(`${BASE_URL}/api/v1/suppliers`);
@@ -169,6 +170,26 @@ export const postSubRecipeID = async (id: number) => {
   return response.data;
 };
 
+//Recipes  , "Recipes"
+export const postRecipe = async (event: any): Promise<RecipeModelUnique[]> => {
+  const response = await axios.post(`${BASE_URL}/api/v1/recipes`, event);
+  return response.data;
+};
+
+export const getRecipes = async (): Promise<RecipeModelUnique[]> => {
+  const response = await axios.get(`${BASE_URL}/api/v1/recipes`);
+  return response.data;
+};
+
+export const getRecipe = async (id: number): Promise<RecipeModelUnique> => {
+  const response = await axios.get(`${BASE_URL}/api/v1/recipes/${id}`);
+  return response.data;
+};
+
+export const postRecipeID = async (id: number) => {
+  const response = await axios.post(`${BASE_URL}/api/v1/recipes/${id}`);
+  return response.data;
+};
 //Stock Sub Recipe
 export const getStockSubRecipe = async () => {
   const response = await axios.get(`${BASE_URL}/api/v1/stock/subrecipes`);

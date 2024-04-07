@@ -1,7 +1,7 @@
 import React from "react";
 
 function Report() {
-  return <div>Reporsst</div>;
+  return <div>Reporscst</div>;
 }
 
 export default Report;

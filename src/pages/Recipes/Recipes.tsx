@@ -5,7 +5,7 @@ import { useMutation, useQuery } from "react-query";
 import { DataGrid } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { getSubRecipes, postSubRecipeID } from "../../utils/api/apiClient";
+import { getRecipes, postSubRecipeID } from "../../utils/api/apiClient";
 import Button from "../../components/Button";
 import { FaCheck } from "react-icons/fa6";
 
@@ -14,11 +14,12 @@ import { CiEdit } from "react-icons/ci";
 // import SubRecipeID from "./SubRecipeID";
 import { PricedSubRecipeModelUnique } from "../../types/apiClientTypes";
 import Modal from "../../components/Modal";
+import RecipeID from "./RecipeID";
 
 function Recipes() {
   const [sub, setSub] = useState<number | undefined>(undefined);
   const [toggleEdit, setToggleEdit] = useState(false);
-  const { data, isLoading, error } = useQuery("SubRecipes", getSubRecipes);
+  const { data, isLoading, error } = useQuery("Recipes", getRecipes);
 
   const mutation = useMutation(postSubRecipeID, {
     onSuccess: (data) => {
@@ -47,7 +48,7 @@ function Recipes() {
   };
   const columns: GridColDef[] = [
     {
-      field: "priced_sub_recipe_id",
+      field: "recipe_id",
       headerName: "ID",
       flex: 0.5,
       minWidth: 90,
@@ -56,7 +57,7 @@ function Recipes() {
     },
 
     {
-      field: "priced_sub_recipe_title",
+      field: "recipe_title",
       headerName: "Title",
       flex: 1,
       minWidth: 150,
@@ -64,7 +65,7 @@ function Recipes() {
       align: "center",
     },
     {
-      field: "priced_sub_recipe_description",
+      field: "recipe_description",
       headerName: "Description",
       flex: 1,
       minWidth: 120,
@@ -73,7 +74,7 @@ function Recipes() {
     },
 
     {
-      field: "priced_sub_recipe_quantity",
+      field: "recipe_quantity",
       headerName: "Quantity",
       flex: 1,
       minWidth: 120,
@@ -81,7 +82,7 @@ function Recipes() {
       align: "center",
     },
     {
-      field: "priced_sub_recipe_food_cost",
+      field: "recipe_food_cost",
       headerName: "Food Cost",
       flex: 1,
       minWidth: 120,
@@ -89,7 +90,7 @@ function Recipes() {
       align: "center",
     },
     {
-      field: "priced_sub_recipe_ingredients",
+      field: "recipe_ingredients",
       headerName: "Ingredients",
       sortable: false,
       flex: 1,
@@ -98,7 +99,7 @@ function Recipes() {
       align: "center",
       renderCell: (params: {
         row: {
-          priced_sub_recipe_id: any;
+          recipe_id: any;
         };
       }) => (
         <>
@@ -106,13 +107,13 @@ function Recipes() {
           <div className="flex flex-row gap-2">
             {" "}
             <button
-              onClick={() => handleEdit(params.row.priced_sub_recipe_id)}
+              onClick={() => handleEdit(params.row.recipe_id)}
               className="bg-gray-200 p-3 hover:bg-gray-300 rounded-md"
             >
               <CiEdit className="text-gray-800 " />
             </button>
             <button
-              onClick={() => handleExecution(params.row.priced_sub_recipe_id)}
+              onClick={() => handleExecution(params.row.recipe_id)}
               className="bg-green-200 p-3 hover:bg-green-300 rounded-md"
             >
               <FaCheck />
@@ -143,7 +144,7 @@ function Recipes() {
         <div className="ml-2 flex flex-row justify-between">
           <div className="flex flex-row justify-start  gap-4 ">
             <div className="flex flex-row">
-              <Link to="/newsubrecipe">
+              <Link to="/newrecipe">
                 <Button
                   message={"Recipe"}
                   bgColor={"bg-blue-600"}
@@ -188,9 +189,9 @@ function Recipes() {
           }}
         />
       </div>
-      {/* {sub !== undefined && toggleEdit && (
-        <SubRecipeID sub={sub} setToggleEdit={setToggleEdit} />
-      )} */}
+      {sub !== undefined && toggleEdit && (
+        <RecipeID sub={sub} setToggleEdit={setToggleEdit} />
+      )}
       {sub !== undefined && toggleEdit && <Modal />}
     </>
   );

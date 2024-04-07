@@ -19,6 +19,7 @@ function SignUp() {
   const mutation = useMutation(postSignUp, {
     onSuccess: () => {
       queryClient.invalidateQueries("SignUp");
+
       setTimeout(() => {
         navigate("/dashboard");
       }, 1200);

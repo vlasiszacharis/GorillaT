@@ -86,3 +86,24 @@ export interface AddItemPros {
 export interface EditItemPros extends StockItem {
   setToggleEdit: Function;
 }
+
+//Recipes
+export interface RecipeModelUnique {
+  recipe_id: number;
+  recipe_title: string;
+  recipe_description: string;
+  recipe_ingredients: PricedIngredientModel[];
+  recipe_quantity: number;
+  recipe_food_cost: number;
+  enabled: boolean;
+}
+export interface RecipeModel {
+  recipe_id: number;
+  recipe_title: string;
+  recipe_description: string;
+  recipe_ingredients: PricedIngredientModel[];
+  recipe_quantity: number;
+  recipe_food_cost: number;
+  enabled: boolean;
+  recipe_pricePerUnit: number;
+}
