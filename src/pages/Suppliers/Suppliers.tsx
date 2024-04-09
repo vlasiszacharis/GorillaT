@@ -7,7 +7,7 @@ import { useState } from "react";
 import EditSupplier from "./EditSupplier";
 import Modal from "../../components/Modal";
 import { DataGrid } from "@mui/x-data-grid";
-
+import { useCalculateScreen } from "../../hooks/useCalculateScreen";
 import { GridColDef } from "@mui/x-data-grid";
 import { getSuppliers, deleteSupplier } from "../../utils/api/apiClient";
 import { Supplier } from "../../types/apiClientTypes";
@@ -29,7 +29,7 @@ function SuppliersExcel() {
   const [editEmail, setEditEmail] = useState("");
   const [editWeb, setWeb] = useState("");
   const [toggleEdit, setToggleEdit] = useState(false);
-
+  const isTablet = useCalculateScreen();
   // Get Suppliers
   const { data, error, isLoading } = useQuery("Suppliers", getSuppliers);
 
@@ -75,7 +75,7 @@ function SuppliersExcel() {
       field: "id",
       headerName: "ID",
       flex: 0.5,
-      minWidth: 90,
+      maxWidth: isTablet ? 20 : 90,
       headerAlign: "center",
       align: "center",
     },
@@ -110,6 +110,7 @@ function SuppliersExcel() {
       minWidth: 120,
       headerAlign: "center",
       align: "center",
+      hideable: true,
     },
     {
       field: "actions",
@@ -175,7 +176,7 @@ function SuppliersExcel() {
     <>
       <SuppliersMenu />
 
-      <div className="bg-white shadow-lg justify-center items-center flex ml-7 h-[540px] w-[95%]  3xl:h-[755px]">
+      <div className="bg-white shadow-lg justify-center items-center flex ml-7 xl:h-[540px] xl:w-[95%]  md:h-[900px] lg:h-[1150px] md:w-[65%] lg:w-[73%]  3xl:h-[755px]">
         <DataGrid
           rows={rows}
           columns={columns}

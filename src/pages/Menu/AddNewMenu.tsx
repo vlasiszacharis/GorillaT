@@ -1,6 +1,26 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
+// import { getRecipes } from "../../utils/api/apiClient";
+// import { useQuery } from "react-query";
+import { FaBook } from "react-icons/fa6";
+// interface MenuType {
+//   id: number;
+//   label: string;
+// }
 
 function AddNewMenu() {
+  // const [name, setName] = useState<string>();
+  const [searchRecipe, setSearchRecipe] = useState("");
+  // const [newMenu, setNewMenu] = useState<MenuType | null>(null);
+  // const { data: recipes } = useQuery("recipes", getRecipes);
+
+  const handleRecipe = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchRecipe(event.target.value);
+  };
+  // const visibleRecipes =
+  //   recipes?.filter((recipes) =>
+  //     recipes.recipe_title.toLowerCase().includes(searchRecipe.toLowerCase())
+  //   ) || [];
+
   return (
     <>
       <div className=" px-1 pr-2">
@@ -14,7 +34,7 @@ function AddNewMenu() {
           </h3>
           <div className="grid grid-cols-1 w-1/2 gap-2">
             <div className="flex flex-col gap-2 col-span-1">
-              <label htmlFor="menuNam" className="font-medium text-gray-700">
+              <label htmlFor="menuName" className="font-medium text-gray-700">
                 Name
               </label>
               <input
@@ -44,12 +64,16 @@ function AddNewMenu() {
               >
                 Category
               </label>
-              <input
-                id="menuCategory"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Category"
-              />
+              <div>
+                <select
+                  id="menuCategory"
+                  name="menuCategory"
+                  className="mt-1 border py-1 border-gray-300 rounded-md focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+                >
+                  <option value="degustation">Degustation</option>
+                  <option value="a_la_carte">À la carte</option>
+                </select>
+              </div>
             </div>
           </div>
         </div>
@@ -60,44 +84,35 @@ function AddNewMenu() {
           <h3 className="text-xl pl-4  font-semibold mb-4 text-gray-800">
             Menu Recipes
           </h3>
-          <div className="grid grid-cols-1 w-1/2 gap-2">
+          <div className="grid grid-cols-2 w-full gap-2">
             <div className="flex flex-col gap-2 col-span-1">
               <label htmlFor="menuNam" className="font-medium text-gray-700">
-                Name
+                Add Recipe
               </label>
-              <input
-                id="menuName"
-                name="menu_name"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Name"
-              />
+              <div className="flex flex-row gap-1">
+                <div className="bg-blue-100 w-8 h-8 rounded-md flex justify-center items-center">
+                  <span className=" flex flex-row justify-center items-center">
+                    <FaBook color="blue" size={14} />
+                  </span>
+                </div>
+                <input
+                  value={searchRecipe}
+                  onChange={handleRecipe}
+                  id="menuName"
+                  name="menu_name"
+                  type="text"
+                  className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Name"
+                />
+              </div>
             </div>
-            <div className="flex flex-col gap-2 col-span-1">
-              <label htmlFor="menuType" className="font-medium text-gray-700">
-                Type
-              </label>
-              <input
-                id="menuType"
-                name="menuType"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Type"
-              />
-            </div>
-            <div className="flex flex-col gap-2 col-span-1">
-              <label
-                htmlFor="menuCategory"
-                className="font-medium text-gray-700"
-              >
-                Category
-              </label>
-              <input
-                id="menuCategory"
-                type="text"
-                className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                placeholder="Category"
-              />
+
+            <div className="flex flex-col gap-2">
+              {" "}
+              <div className="font-semibold text-lg font-manrope">
+                {/* Menu Name : {name} */}
+              </div>
+              <div></div>{" "}
             </div>
           </div>
           <button

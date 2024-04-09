@@ -55,13 +55,13 @@ function App() {
         <div className="min-h-screen flex bg-slate-150">
           <aside
             className={`fixed  pt-5 rounded-r-3xl  bg-custom-navy  ${
-              isCollapsed ? "w-[5%]" : "w-1/6"
-            } p-3 text-white text-opacity-80 transition-all duration-300 h-screen flex flex-col justify-between `}
+              isCollapsed ? "xl:w-[5%] md:w-[9%] " : "xl:w-1/6 md:w-1/4"
+            } p-3 text-white text-opacity-80 transition-all duration-300 h-screen flex flex-col xl:justify-between md:justify-start md:gap-16 xl:gap-0 `}
           >
             {!isCollapsed && (
               <button
                 onClick={toggleSidebar}
-                className="absolute top-1/2 left-56 3xl:left-72 transform -translate-y-1/2 cursor-pointer opacity-80 text-white  hover:opacity-100"
+                className="absolute top-1/2 lg:left-56 md:left-40  3xl:left-72 transform -translate-y-1/2 cursor-pointer opacity-80 text-white  hover:opacity-100"
               >
                 <MdOutlineKeyboardArrowLeft size={38} />
               </button>
@@ -76,21 +76,25 @@ function App() {
               </button>
             )}
 
-            <div className="flex justify-start items-center gap-1 pb-2 ">
-              <img src={logo} width={"70px"} className="App-logo" alt="logo" />
+            <div className=" flex justify-start md:w-14 xl:w-16 items-center xl:gap-1 xl:pb-2 ">
+              <img
+                src={logo}
+                className="w-auto max-w-full h-auto App-logo"
+                alt="logo"
+              />
 
               {!isCollapsed && (
-                <h1 className="font-manrope text-2xl tracking-wider text-white font-semibold text-opacity-100 ">
+                <h1 className="font-manrope lg:text-2xl md:text-lg tracking-wider text-white font-semibold text-opacity-100  ">
                   EasyKitchen
                 </h1>
               )}
             </div>
-            <div className="flex flex-col gap-3 pb-10 3xl:pb-52">
+            <div className="flex flex-col xl:gap-3 xl:pb-10 3xl:pb-52 md:gap-8 md:text-xl lg:text-2xl xl:text-lg ">
               <NavLink
                 data-tooltip-id="overview"
                 data-tooltip-content="Overview"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2  px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2  px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700 rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -107,7 +111,7 @@ function App() {
                 data-tooltip-id="suppliers"
                 data-tooltip-content="Suppliers"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -124,7 +128,7 @@ function App() {
                 data-tooltip-id="stock"
                 data-tooltip-content="  Stock"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -141,7 +145,7 @@ function App() {
                 data-tooltip-id="inventory"
                 data-tooltip-content="Inventory"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -158,7 +162,7 @@ function App() {
                 data-tooltip-id="subrecipes"
                 data-tooltip-content="Sub-Recipes"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -175,7 +179,7 @@ function App() {
                 data-tooltip-id="recipes"
                 data-tooltip-content="Recipes"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -191,7 +195,7 @@ function App() {
                 data-tooltip-id="menu"
                 data-tooltip-content="Menu"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700 rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -207,7 +211,7 @@ function App() {
                 data-tooltip-id="report"
                 data-tooltip-content="Report"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2  ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -224,7 +228,7 @@ function App() {
                 data-tooltip-id="settings"
                 data-tooltip-content="Settings"
                 className={({ isActive }) =>
-                  `flex items-center justify-start gap-5 mb-2 px-4 py-2 text-lg  ${
+                  `flex items-center justify-start gap-5 mb-2 px-4 py-2   ${
                     isActive
                       ? "bg-white font-bold text-blue-700  rounded-lg"
                       : "text-white hover:bg-white/30"
@@ -237,12 +241,12 @@ function App() {
                 {isCollapsed && <Tooltip id="settings" place="right" />}
               </NavLink>
 
-              <div className="flex flex-col gap-3 pb-6  ">
+              <div className="flex flex-col gap-3 pb-6 md:pt-6 xl:pt-0 ">
                 <NavLink
                   data-tooltip-id="account"
                   data-tooltip-content="Account"
                   className={({ isActive }) =>
-                    `flex items-center justify-start gap-5 mb-2 mt-4 px-4 py-2 text-lg ${
+                    `flex items-center justify-start gap-5 mb-2 mt-4 px-4 py-2  ${
                       isActive
                         ? "bg-white font-bold text-blue-700 rounded-lg"
                         : "text-white hover:bg-white/30"
@@ -260,7 +264,9 @@ function App() {
 
           <main
             className={`flex-1 transition-margin duration-300 ${
-              isCollapsed ? "ml-[5%]" : "ml-[17%]"
+              isCollapsed
+                ? "xl:ml-[5%] md:ml-[11%] "
+                : "xl:ml-[17%] md:ml-[24%]"
             }`}
           >
             <Routes>
