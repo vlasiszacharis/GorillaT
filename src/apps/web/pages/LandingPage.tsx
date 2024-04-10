@@ -17,11 +17,11 @@ function LandingPage() {
           EasyKitchen
         </h1>
 
-        {/* Navigation Links */}
+        
       </div>
 
       <div className="flex items-center gap-4">
-        {/* Language Selector, Login, and Request Demo Button */}
+        
         <div className="hidden md:flex gap-6">
           <NavLink to="/platform" className="hover:text-gray-300">
             Platform
@@ -29,7 +29,7 @@ function LandingPage() {
           <NavLink to="/who-we-help" className="hover:text-gray-300">
             Who We Help
           </NavLink>
-          {/* ...other navigation links */}
+          
         </div>
         <NavLink to="signup" className="hover:text-gray-300">
           Sign
