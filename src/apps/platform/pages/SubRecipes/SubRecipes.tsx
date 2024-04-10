@@ -5,21 +5,20 @@ import { useMutation, useQuery } from "react-query";
 import { DataGrid } from "@mui/x-data-grid";
 import { GridColDef } from "@mui/x-data-grid";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import { getRecipes, postSubRecipeID } from "../../utils/api/apiClient";
+import { getSubRecipes, postSubRecipeID } from "../../utils/api/apiClient";
 import Button from "../../components/Button";
 import { FaCheck } from "react-icons/fa6";
 
 import { CiEdit } from "react-icons/ci";
 
-// import SubRecipeID from "./SubRecipeID";
+import SubRecipeID from "./SubRecipeID";
 import { PricedSubRecipeModelUnique } from "../../types/apiClientTypes";
 import Modal from "../../components/Modal";
-import RecipeID from "./RecipeID";
 
-function Recipes() {
+function SubRecipes() {
   const [sub, setSub] = useState<number | undefined>(undefined);
   const [toggleEdit, setToggleEdit] = useState(false);
-  const { data, isLoading, error } = useQuery("Recipes", getRecipes);
+  const { data, isLoading, error } = useQuery("SubRecipes", getSubRecipes);
 
   const mutation = useMutation(postSubRecipeID, {
     onSuccess: (data) => {
@@ -48,7 +47,7 @@ function Recipes() {
   };
   const columns: GridColDef[] = [
     {
-      field: "recipe_id",
+      field: "priced_sub_recipe_id",
       headerName: "ID",
       flex: 0.5,
       minWidth: 90,
@@ -57,7 +56,7 @@ function Recipes() {
     },
 
     {
-      field: "recipe_title",
+      field: "priced_sub_recipe_title",
       headerName: "Title",
       flex: 1,
       minWidth: 150,
@@ -65,7 +64,7 @@ function Recipes() {
       align: "center",
     },
     {
-      field: "recipe_description",
+      field: "priced_sub_recipe_description",
       headerName: "Description",
       flex: 1,
       minWidth: 120,
@@ -74,7 +73,7 @@ function Recipes() {
     },
 
     {
-      field: "recipe_quantity",
+      field: "priced_sub_recipe_quantity",
       headerName: "Quantity",
       flex: 1,
       minWidth: 120,
@@ -82,7 +81,7 @@ function Recipes() {
       align: "center",
     },
     {
-      field: "recipe_food_cost",
+      field: "priced_sub_recipe_food_cost",
       headerName: "Food Cost",
       flex: 1,
       minWidth: 120,
@@ -90,7 +89,7 @@ function Recipes() {
       align: "center",
     },
     {
-      field: "recipe_ingredients",
+      field: "priced_sub_recipe_ingredients",
       headerName: "Ingredients",
       sortable: false,
       flex: 1,
@@ -99,7 +98,7 @@ function Recipes() {
       align: "center",
       renderCell: (params: {
         row: {
-          recipe_id: any;
+          priced_sub_recipe_id: any;
         };
       }) => (
         <>
@@ -107,13 +106,13 @@ function Recipes() {
           <div className="flex flex-row gap-2">
             {" "}
             <button
-              onClick={() => handleEdit(params.row.recipe_id)}
+              onClick={() => handleEdit(params.row.priced_sub_recipe_id)}
               className="bg-gray-200 p-3 hover:bg-gray-300 rounded-md"
             >
               <CiEdit className="text-gray-800 " />
             </button>
             <button
-              onClick={() => handleExecution(params.row.recipe_id)}
+              onClick={() => handleExecution(params.row.priced_sub_recipe_id)}
               className="bg-green-200 p-3 hover:bg-green-300 rounded-md"
             >
               <FaCheck />
@@ -144,9 +143,9 @@ function Recipes() {
         <div className="ml-2 flex flex-row justify-between">
           <div className="flex flex-row justify-start  gap-4 ">
             <div className="flex flex-row">
-              <Link to="/newrecipe">
+              <Link to="/app/newsubrecipe">
                 <Button
-                  message={"Recipe"}
+                  message={"SubRecipe"}
                   bgColor={"bg-blue-600"}
                   hoverBgColor={"hover:bg-custom-navy"}
                   textColor={"white"}
@@ -190,11 +189,11 @@ function Recipes() {
         />
       </div>
       {sub !== undefined && toggleEdit && (
-        <RecipeID sub={sub} setToggleEdit={setToggleEdit} />
+        <SubRecipeID sub={sub} setToggleEdit={setToggleEdit} />
       )}
       {sub !== undefined && toggleEdit && <Modal />}
     </>
   );
 }
 
-export default Recipes;
+export default SubRecipes;

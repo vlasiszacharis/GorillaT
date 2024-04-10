@@ -68,7 +68,7 @@ function Menu() {
         <div className="flex-grow p-6 py-10 bg-white rounded-xl shadow-md flex justify-center items-center">
           <Link
             className="flex opacity-70 justify-center items-center "
-            to={"/newmenu"}
+            to={"/app/newmenu"}
           >
             <FaPlus color="black" size={56} />
           </Link>

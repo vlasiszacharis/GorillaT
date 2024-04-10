@@ -19,8 +19,7 @@ import Account from "../Account/Account";
 import Ingredients from "../Ingredients/Ingredients";
 import NewRecipe from "../Recipes/NewRecipe/NewRecipe";
 import Recipes from "../Recipes/Recipes";
-import SignIn from "../SignUser/SignIn/SignIn";
-import SignUp from "../SignUser/SignUp/SignUp";
+
 import Stock from "../Stock/Stock";
 import NewSub from "../SubRecipes/NewSubRecipe/NewSub";
 import SubRecipes from "../SubRecipes/SubRecipes";
@@ -44,18 +43,13 @@ function App() {
     <>
       <NavigationHandler />
 
-      <main>
-        <Routes>
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-        </Routes>
-      </main>
-
       {!isSignupPage && (
         <div className="min-h-screen flex bg-slate-150">
           <aside
             className={`fixed  pt-5 rounded-r-3xl  bg-custom-navy  ${
-              isCollapsed ? "xl:w-[5%] md:w-[9%] " : "xl:w-1/6 md:w-1/4"
+              isCollapsed
+                ? "xl:w-[5%] md:w-[9%]  "
+                : "xl:w-1/6  md:w-1/4 lg:w-1/4"
             } p-3 text-white text-opacity-80 transition-all duration-300 h-screen flex flex-col xl:justify-between md:justify-start md:gap-16 xl:gap-0 `}
           >
             {!isCollapsed && (
@@ -100,7 +94,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/dashboard"
+                to="/app/dashboard"
               >
                 <IoMdHome size={24} />
                 {!isCollapsed && <span>Overview</span>}
@@ -117,7 +111,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/suppliers"
+                to="/app/suppliers"
               >
                 <MdOutlineEmojiTransportation size={24} />
                 {!isCollapsed && <span>Suppliers</span>}
@@ -134,7 +128,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/stock"
+                to="/app/stock"
               >
                 <MdOutlineWarehouse size={24} />
                 {!isCollapsed && <span>Stock</span>}
@@ -151,7 +145,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/inventory"
+                to="/app/inventory"
               >
                 <MdOutlineInventory size={24} />
                 {!isCollapsed && <span>Inventory</span>}
@@ -168,7 +162,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/subrecipes"
+                to="/app/subrecipes"
               >
                 <FaBookOpen size={24} />
                 {!isCollapsed && <span>Sub-Recipes</span>}
@@ -185,7 +179,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/recipes"
+                to="/app/recipes"
               >
                 <FaBook size={24} />
                 {!isCollapsed && <span>Recipes</span>}
@@ -201,7 +195,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/menu"
+                to="/app/menu"
               >
                 <MdOutlineRestaurantMenu size={28} />
                 {!isCollapsed && <span>Menu</span>}
@@ -217,7 +211,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/report"
+                to="/app/report"
               >
                 <HiOutlineDocumentReport size={24} />
                 {!isCollapsed && <span>Report</span>}
@@ -234,7 +228,7 @@ function App() {
                       : "text-white hover:bg-white/30"
                   }`
                 }
-                to="/settings"
+                to="/app/settings"
               >
                 <IoSettingsOutline size={24} />
                 {!isCollapsed && <span>Settings</span>}
@@ -252,7 +246,7 @@ function App() {
                         : "text-white hover:bg-white/30"
                     }`
                   }
-                  to="/account"
+                  to="/app/account"
                 >
                   <MdAccountCircle size={24} />
                   {!isCollapsed && <span>Account</span>}
@@ -265,8 +259,8 @@ function App() {
           <main
             className={`flex-1 transition-margin duration-300 ${
               isCollapsed
-                ? "xl:ml-[5%] md:ml-[11%] "
-                : "xl:ml-[17%] md:ml-[24%]"
+                ? "xl:ml-[5%] md:ml-[10%] lg:ml-[11%] "
+                : "xl:ml-[17%] md:ml-[22%] lg:ml-[24%]"
             }`}
           >
             <Routes>

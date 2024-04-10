@@ -1,25 +1,42 @@
 import React, { ChangeEvent, useState } from "react";
-// import { getRecipes } from "../../utils/api/apiClient";
-// import { useQuery } from "react-query";
+import { getRecipes } from "../../utils/api/apiClient";
+import { useQuery } from "react-query";
 import { FaBook } from "react-icons/fa6";
-// interface MenuType {
-//   id: number;
-//   label: string;
-// }
+import { RecipeModelUnique } from "../../types/apiClientTypes";
+interface MenuType {
+  id: number;
+  label: string;
+}
 
 function AddNewMenu() {
-  // const [name, setName] = useState<string>();
+  const [name, setName] = useState<string>();
   const [searchRecipe, setSearchRecipe] = useState("");
-  // const [newMenu, setNewMenu] = useState<MenuType | null>(null);
-  // const { data: recipes } = useQuery("recipes", getRecipes);
+  const [newMenu, setNewMenu] = useState<MenuType | null>(null);
+  const [showMenu, setShowMenu] = useState(false);
+  const { data: recipes } = useQuery("recipes", getRecipes);
 
   const handleRecipe = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchRecipe(event.target.value);
   };
-  // const visibleRecipes =
-  //   recipes?.filter((recipes) =>
-  //     recipes.recipe_title.toLowerCase().includes(searchRecipe.toLowerCase())
-  //   ) || [];
+  const visibleRecipes =
+    recipes?.filter((recipes) =>
+      recipes.recipe_title.toLowerCase().includes(searchRecipe.toLowerCase())
+    ) || [];
+  const handleMenuFocus = () => {
+    if (!showMenu) {
+      setShowMenu(true);
+    } else {
+      setTimeout(() => {
+        setShowMenu(false);
+      }, 200);
+    }
+  };
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+  };
+  function handleItemClick(recipe: RecipeModelUnique): void {
+    throw new Error("Function not implemented.");
+  }
 
   return (
     <>
@@ -43,6 +60,7 @@ function AddNewMenu() {
                 type="text"
                 className="pl-3 py-1 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Name"
+                onChange={handleChange}
               />
             </div>
             <div className="flex flex-col gap-2 col-span-1">
@@ -98,6 +116,8 @@ function AddNewMenu() {
                 <input
                   value={searchRecipe}
                   onChange={handleRecipe}
+                  onFocus={handleMenuFocus}
+                  onBlur={handleMenuFocus}
                   id="menuName"
                   name="menu_name"
                   type="text"
@@ -105,12 +125,25 @@ function AddNewMenu() {
                   placeholder="Name"
                 />
               </div>
+              {showMenu && (
+                <div className="relative bg-white border border-gray-300 mt-1 rounded-md max-h-36 overflow-auto w-full">
+                  {visibleRecipes.map((recipe: RecipeModelUnique) => (
+                    <div
+                      key={recipe.recipe_id}
+                      className="p-2 hover:bg-gray-100 cursor-pointer"
+                      onClick={() => handleItemClick(recipe)}
+                    >
+                      {recipe.recipe_title} - {recipe.recipe_description}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="flex flex-col gap-2">
               {" "}
               <div className="font-semibold text-lg font-manrope">
-                {/* Menu Name : {name} */}
+                Menu Name : {name}
               </div>
               <div></div>{" "}
             </div>
