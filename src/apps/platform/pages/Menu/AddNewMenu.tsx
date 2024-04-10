@@ -3,15 +3,15 @@ import { getRecipes } from "../../utils/api/apiClient";
 import { useQuery } from "react-query";
 import { FaBook } from "react-icons/fa6";
 import { RecipeModelUnique } from "../../types/apiClientTypes";
-interface MenuType {
-  id: number;
-  label: string;
-}
+// interface MenuType {
+//   id: number;
+//   label: string;
+// }
 
 function AddNewMenu() {
   const [name, setName] = useState<string>();
   const [searchRecipe, setSearchRecipe] = useState("");
-  const [newMenu, setNewMenu] = useState<MenuType | null>(null);
+  // const [newMenu, setNewMenu] = useState<MenuType | null>(null);
   const [showMenu, setShowMenu] = useState(false);
   const { data: recipes } = useQuery("recipes", getRecipes);
 
